@@ -121,8 +121,8 @@ alert('User already registered. Please try again');
                         <!-- <li><a href="adminlogin.php">Admin</a></li> -->
                         <li><a href="index.php" data-toggle="modal" data-target="">Home</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myIntro">About us</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#myIntro">Service</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#myModal">News</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#mySer">Service</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myNews">News</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myDoctors">Doctors</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myModal">Sign Up</a></li>
                    
@@ -309,14 +309,13 @@ alert('User already registered. Please try again');
                 </div>
             </div>
         </div>
-        <!-- intro -->
-        <div class="modal fade" id="myIntro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="mySer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <!-- modal content -->
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="modal-title">Intro</h3>
+                        <h3 class="modal-title">Service</h3>
                     </div>
                     <!-- modal body start -->
                     <div class="modal-body">
@@ -327,13 +326,81 @@ alert('User already registered. Please try again');
                                 <div class="col-md-6">
                                     
                                     <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
-                                        <h4>About us</h4>
-                                        <p><?php echo "Hello everybody"?></p>
-
-
-                                        <span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</span>
                                         
-                                        <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit" name="signup" id="signup">Create my account</button>
+                                                <h4><u><i>Medical examination and treatment on request</i></u></h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/yc.png" width=160 height=150 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                
+						    	                <p>In addition to receiving medical examination and treatment with a health insurance card provided by the Social Insurance agency</p>
+                                                <p>The hospital also examines those who pay for their own expenses or have health cards of reputable insurance organizations such as: Liberty, Aon , Pico oil and gas insurance, Bao Viet insurance, BIC insurance ...</p>
+                                                
+                                                
+                                                <h4><u><i>Health insurance examination</i></u></h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/bh.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                <p>With the motto health care for the community is a top task. Viet Han polyclinic participates in medical examination and treatment for patients with health insurance.are harmful to health. </p>
+                                                <p>More than ever, you need to take care of and care more about the health of you and your loved ones</p>
+                                                <br>
+                                                <h4><u><i>Periodic health examination</i></u></h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/dk.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                <p>Busy life, stressful work together with an unreasonable living regime, erratic eating ... are harmful to health. More than ever, you need to take care of and care more about the health of you and your loved ones.</p>
+                                        
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- intro -->
+        <div class="modal fade" id="myIntro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- modal content -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title">About US</h3>
+                    </div>
+                    <!-- modal body start -->
+                    <div class="modal-body">
+                        
+                        <!-- form start -->
+                        <div class="container" id="wrap">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                        
+                                                <h4>Hospital Address</h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/map.png" width=160 height=150 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                
+						    	                <p>254 Nguyen Van Linh street, Hai Chau, Da Nang City, Viet Nam</p>
+                                                <p><b>Phone:</b>(+84) 000 000 000</p>
+                                                <p><b>Fax:</b> (000) 000 00 00 0</p>
+                                                <p><b>Email: </b><u>nguyencaonguyencmu@gmail.com</u></p>
+                                                
+                                                <h4>Introduce</h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/bv.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                <p>C1SE.35 Hospital was established in 0000 with a total area of nearly 1000 m2. In the early years, the clinic mainly served and cared for more than 30,000 patients.</p>
+                                                <p>Coming to us, customers will be cared for, respected and treated politely. Friendly reception, effective and dedicated service.</p>
+                                                <br>
+                                                <p><b><i>Prestigious insurance organizations such as Liberty, Aon, Petroleum Insurance, Pjco, Bao Viet Insurance, Prevoir, Grasavoye ... to guarantee hospital fees for organizations and individuals in the most convenient and fastest way. </i></b></p>
+                                        
                                     </form>
                                     
                                 </div>
@@ -470,73 +537,7 @@ alert('User already registered. Please try again');
         
         <!-- third section end -->
         <!-- forth sections start -->
-        <section id="content-1-9" class="content-1-9 content-block">
-            <div class="container">
-                <div class="underlined-title">
-                    <h1>Get in Touch</h1>
-                    <hr>
-                    <h2>Feel free to drop us a line to contact us</h2>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-pencil"></span>
-                        </div>
-                        <div class="col-xs-10">
-                            <h4 href ="https://projectworlds.in/">Branding</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-code"></span>
-                        </div>
-                        <div class="col-xs-10">
-                            <h4>Web Design</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-comments-o"></span>
-                        </div>
-                        <div class="col-xs-10">
-                            <h4>Social Marketing</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-search"></span>
-                        </div>
-                        <div class="col-xs-10">
-                            <h4>SEO</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-mobile"></span>
-                        </div>
-                        <div class="col-xs-10">
-                            <h4>Mobile Apps</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-bookmark"></span>
-                        </div>
-                        <div class="col-xs-10">
-                            <h4>Corporate Literture</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container -->
-        </section>
+        
         <!-- forth section end -->
         <!-- footer start -->
         <div class="copyright-bar bg-black">
@@ -562,6 +563,9 @@ alert('User already registered. Please try again');
     $('#myInput').focus()
     })
     $('#myIntro').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    })
+    $('#mySer').on('shown.bs.modal', function () {
     $('#myInput').focus()
     })
     $('#myDoctors').on('shown.bs.modal', function () {

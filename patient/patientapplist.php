@@ -47,13 +47,16 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<ul class="nav navbar-nav">
-							<li><a href="patient.php">Home</a></li>
-							<!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
-							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
+							
 						</ul>
 					</ul>
 					
 					<ul class="nav navbar-nav navbar-right">
+						<li><a href="patient.php" >Home</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myIntro">About us</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#mySer">Service</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myModal">News</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myDoctors">Doctors</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -74,6 +77,107 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
 			</div>
 		</nav>
 		<!-- navigation -->
+		<div class="modal fade" id="myIntro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- modal content -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title">About US</h3>
+                    </div>
+                    <!-- modal body start -->
+                    <div class="modal-body">
+                        
+                        <!-- form start -->
+                        <div class="container" id="wrap">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                        
+                                                <h4>Hospital Address</h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/map.png" width=160 height=150 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                
+						    	                <p>254 Nguyen Van Linh street, Hai Chau, Da Nang City, Viet Nam</p>
+                                                <p><b>Phone:</b>(+84) 000 000 000</p>
+                                                <p><b>Fax:</b> (000) 000 00 00 0</p>
+                                                <p><b>Email: </b><u>nguyencaonguyencmu@gmail.com</u></p>
+                                                
+                                                <h4>Introduce</h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/bv.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                <p>C1SE.35 Hospital was established in 0000 with a total area of nearly 1000 m2. In the early years, the clinic mainly served and cared for more than 30,000 patients.</p>
+                                                <p>Coming to us, customers will be cared for, respected and treated politely. Friendly reception, effective and dedicated service.</p>
+                                                <br>
+												
+                                                <p><b><i>Prestigious insurance organizations such as Liberty, Aon, Petroleum Insurance, Pjco, Bao Viet Insurance, Prevoir, Grasavoye ... to guarantee hospital fees for organizations and individuals in the most convenient and fastest way.</i></b></p>
+                                        
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="modal fade" id="mySer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- modal content -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title">Service</h3>
+                    </div>
+                    <!-- modal body start -->
+                    <div class="modal-body">
+                        
+                        <!-- form start -->
+                        <div class="container" id="wrap">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                        
+                                                <h4><u><i>Medical examination and treatment on request</i></u></h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/yc.png" width=160 height=150 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                
+						    	                <p>In addition to receiving medical examination and treatment with a health insurance card provided by the Social Insurance agency</p>
+                                                <p>The hospital also examines those who pay for their own expenses or have health cards of reputable insurance organizations such as: Liberty, Aon , Pico oil  ...</p>
+                                                
+                                                
+                                                <h4><u><i>Health insurance examination</i></u></h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/bh.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                <p>With the motto health care for the community is a top task. Viet Han polyclinic participates in medical examination and treatment for patients with health  </p>
+                                                <p>More than ever, you need to take care of and care more about the health of you and your loved ones</p>
+                                                <br>
+                                                <h4><u><i>Periodic health examination</i></u></h4>
+                                                <div class="col-md-4">
+                                                
+                                                <img src="assets/img/dk.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                </div>
+                                                <p>Busy life, stressful work together with an unreasonable living regime, erratic eating ... are harmful to health. More than ever, you need to take care of and care more about the health of you and your loved ones.</p>
+                                        
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 <!-- display appoinment start -->
 <?php
 
@@ -137,5 +241,16 @@ echo "</table>";
 <!-- display appoinment end -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $('#mySer').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    })
+    $('#myIntro').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    })
+    $('#myDoctors').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    })
+    </script>
 </body>
 </html>
