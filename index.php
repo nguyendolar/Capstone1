@@ -166,7 +166,7 @@ alert('User already registered. Please try again');
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h3 class="modal-title">Sign Up</h3>
-                    </div>
+                    </div>  
                     <!-- modal body start -->
                     <div class="modal-body">
                         
@@ -297,7 +297,7 @@ alert('User already registered. Please try again');
                                             <input type="radio" name="patientGender" value="female" required/>Female
                                         </label>
                                         <br />
-                                        <span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</span>
+                                        <!--<span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</span>-->
                                         
                                         <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit" name="signup" id="signup">Create my account</button>
                                     </form>
@@ -438,10 +438,11 @@ alert('User already registered. Please try again');
                                             <p>
                                                 <div class="row">
                                                 <div class="col-md-4">
-                                                <img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
+                                                <?php echo "<img src='doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
                                                 </div>
                                                 <div class="col-md-5">
-                                                <a href="<?php echo 'http://facebook.com/nguyennguyenas' ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorLastName'] ?></b></a>
+                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorLastName'] ?></b></a>
                                                 <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><?php echo $rowss['doctorPhone']?></h4>
                                                 <h5 style="font-family:'typo' "><?php echo $rowss['doctorEmail'] ?></h4>
                                                 <h5 style="font-family:'typo' ">Developer, thích thể thao, tiếng anh và hentai</h4></div></div>

@@ -18,10 +18,16 @@ $doctorLastName = $_POST['doctorLastName'];
 $doctorPhone = $_POST['doctorPhone'];
 $doctorEmail = $_POST['doctorEmail'];
 $doctorAddress = $_POST['doctorAddress'];
-
-$res=mysqli_query($con,"UPDATE doctor SET doctorFirstName='$doctorFirstName', doctorLastName='$doctorLastName', doctorPhone='$doctorPhone', doctorEmail='$doctorEmail', doctorAddress='$doctorAddress' WHERE doctorId=".$_SESSION['doctorSession']);
+$doctorSocial = $_POST['doctorSocial'];
+$image = $_FILES['image']['name'];
+$target = "assets/img/".basename($image);
+$res=mysqli_query($con,"UPDATE doctor SET doctorFirstName='$doctorFirstName', doctorLastName='$doctorLastName', doctorPhone='$doctorPhone', doctorEmail='$doctorEmail', doctorAddress='$doctorAddress', doctorImg='$image', doctorSocial='$doctorSocial' WHERE doctorId=".$_SESSION['doctorSession']);
 // $userRow=mysqli_fetch_array($res);
-
+if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+    echo '<script language="javascript">alert("Đã upload thành công!");</script>';
+    }else{
+    echo '<script language="javascript">alert("Đã upload thất bại!");</script>';
+    }
 header( 'Location: doctorprofile.php' ) ;
 
 }
@@ -140,7 +146,8 @@ header( 'Location: doctorprofile.php' ) ;
                         <div class="col-md-3 col-sm-3">
                             
                             <div class="user-wrapper">
-                                <img src="assets/img/1.jpg" class="img-responsive" />
+                                <?php echo "<img src='assets/img/".$userRow['doctorImg']."' class='img-responsive' />" ?>
+                                 
                                 <div class="description">
                                     <h4><?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?></h4>
                                     <h5> <strong> Doctor </strong></h5>
@@ -191,6 +198,11 @@ header( 'Location: doctorprofile.php' ) ;
                                                     <td><?php echo $userRow['doctorDOB']; ?>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>Social</td>
+                                                    <td><?php echo $userRow['doctorSocial']; ?>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -215,7 +227,7 @@ header( 'Location: doctorprofile.php' ) ;
                                     </div>
                                     <div class="modal-body">
                                         <!-- form start -->
-                                        <form action="<?php $_PHP_SELF ?>" method="post" >
+                                        <form action="<?php $_PHP_SELF ?>" method="post" enctype="multipart/form-data">
                                             <table class="table table-user-information">
                                                 <tbody>
                                                     <tr>
@@ -247,6 +259,15 @@ header( 'Location: doctorprofile.php' ) ;
                                                         <td>Address</td>
                                                         <td><textarea class="form-control" name="doctorAddress"  ><?php echo $userRow['doctorAddress']; ?></textarea></td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>Social</td>
+                                                        <td><input type="text" class="form-control" name="doctorSocial" value="<?php echo $userRow['doctorSocial']; ?>"  /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                        <input type="hidden" name="size" value="1000000"> 
+                                                        <input type="file" name="image"> 
+                                                        </tr>
                                                     <tr>
                                                         <td>
                                                             <input type="submit" name="submit" class="btn btn-info" value="Update Info"></td>
