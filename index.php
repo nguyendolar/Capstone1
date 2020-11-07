@@ -410,6 +410,55 @@ alert('User already registered. Please try again');
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myNews" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- modal content -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">News</h4>
+                    </div>
+                    <!-- modal body start -->
+                    <div class="modal-body">
+                        <!-- form start -->
+                        <div class="container" id="wrap">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                    <?php
+                                        $s="SELECT * FROM post ";
+                                         $thuchiens= mysqli_query($con,$s);
+                                        
+                                    ?>
+                                    <?php while($posts=mysqli_fetch_assoc($thuchiens)) {
+                                            
+                                        ?>
+                                        <div class="modal-body">
+                                            <p>
+                                                <div class="row">
+                                                <div class="col-md-4">
+                                                <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
+                                                <?php echo "<img src='assets/img/".$posts['postImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
+                                                </div>
+                                                <div class="col-md-5">
+                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $posts['postTitle']; ?> </a>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><?php echo $posts['postBody']?></h4>
+                                                
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Created at :</b><?php echo $posts['postCreate']?></h4></div></div>
+                                            </p>
+                                            
+                                        </div>
+                                    <?php } ?>  
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- doctors -->
         <div class="modal fade" id="myDoctors" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -417,11 +466,11 @@ alert('User already registered. Please try again');
                     <!-- modal content -->
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="modal-title">Doctors</h3>
+                        <h4 class="modal-title">Doctors</h4>
                     </div>
                     <!-- modal body start -->
                     <div class="modal-body">
-                        
+                    
                         <!-- form start -->
                         <div class="container" id="wrap">
                             <div class="row">
@@ -442,10 +491,10 @@ alert('User already registered. Please try again');
                                                 <?php echo "<img src='doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
                                                 </div>
                                                 <div class="col-md-5">
-                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorLastName'] ?></b></a>
-                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><?php echo $rowss['doctorPhone']?></h4>
-                                                <h5 style="font-family:'typo' "><?php echo $rowss['doctorEmail'] ?></h4>
-                                                <h5 style="font-family:'typo' ">Developer, thích thể thao, tiếng anh và hentai</h4></div></div>
+                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorFirstName']; ?> <?php echo $rowss['doctorLastName']; ?></a>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Phone :</b><?php echo $rowss['doctorPhone']?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Email:</b><?php echo $rowss['doctorEmail'] ?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Address :</b><?php echo $rowss['doctorAddress']?></h4></div></div>
                                             </p>
                                             
                                         </div>
@@ -459,6 +508,7 @@ alert('User already registered. Please try again');
                 </div>
             </div>
         </div>
+
         <!-- modal end -->
         <!-- modal container end -->
 
@@ -570,6 +620,9 @@ alert('User already registered. Please try again');
     $('#myInput').focus()
     })
     $('#myDoctors').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    })
+    $('#myNews').on('shown.bs.modal', function () {
     $('#myInput').focus()
     })
     </script>
