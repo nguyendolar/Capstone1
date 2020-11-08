@@ -427,7 +427,7 @@ alert('User already registered. Please try again');
                                     
                                     <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
                                     <?php
-                                        $s="SELECT * FROM post ";
+                                        $s="SELECT * FROM post ORDER BY  postCreate DESC ";
                                          $thuchiens= mysqli_query($con,$s);
                                         
                                     ?>
