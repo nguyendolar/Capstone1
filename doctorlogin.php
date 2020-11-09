@@ -2,25 +2,27 @@
 include_once 'assets/conn/dbconnect.php';
 
 session_start();
-
+if (isset($_SESSION['doctorSession']) != "") {
+header("Location: doctor/doctordashboard.php");
+}
 if (isset($_POST['login']))
 {
-$adminId = mysqli_real_escape_string($con,$_POST['doctorId']);
+$doctorId = mysqli_real_escape_string($con,$_POST['doctorId']);
 $password  = mysqli_real_escape_string($con,$_POST['password']);
 
-$res = mysqli_query($con,"SELECT * FROM admin WHERE username = '$adminId'");
+$res = mysqli_query($con,"SELECT * FROM doctor WHERE doctorId = '$doctorId'");
 
 $row=mysqli_fetch_array($res,MYSQLI_ASSOC);
 // echo $row['password'];
 if ($row['password'] == $password)
 {
-$_SESSION['adminSession'] = $row['username'];
+$_SESSION['doctorSession'] = $row['doctorId'];
 ?>
 <script type="text/javascript">
 alert('Login Success');
 </script>
 <?php
-header("Location: admin/patientlist.php");
+header("Location: doctor/doctordashboard.php");
 } else {
 ?>
 <script type="text/javascript">
@@ -50,7 +52,7 @@ header("Location: admin/patientlist.php");
                     <div class="avatar"></div>
                     <div class="form-box">
                         <form class="form" role="form" method="POST" accept-charset="UTF-8">
-                            <input name="doctorId" type="text" placeholder="Username" required>
+                            <input name="doctorId" type="text" placeholder="Doctor ID" required>
                             <input name="password" type="password" placeholder="Password" required>
                             <button class="btn btn-info btn-block login" type="submit" name="login">Login</button>
                         </form>

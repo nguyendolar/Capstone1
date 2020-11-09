@@ -596,7 +596,7 @@ alert('User already registered. Please try again');
                 <p class="pull-left small">© Created by <a href="https://facebook.com/nguyennguyenas" target="_blank">Nguyên Nguyên</a></p>
                 <p class="pull-right small"><a href="adminlogin.php">Admin</a></p>
                 <br>
-                <p class="pull-right small"><a href="adminlogin.php">Doctor</a></p>
+                <p class="pull-right small"><a href="doctorlogin.php">Doctor</a></p>
             </div>
         </div>
         <!-- footer end -->
@@ -644,6 +644,18 @@ alert('User already registered. Please try again');
 </script>
 
     <!-- date end -->
-   
+   <!--Start of Tawk.to Script-->
+   <script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5fa92f558e1c140c2abc3136/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 </body>
 </html>
