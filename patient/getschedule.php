@@ -22,7 +22,7 @@ die("Error running $sql: " . mysqli_error());
             echo " <thead>";
                 echo " <tr>";
                     echo " <th>App Id</th>";
-                    echo " <th>Day</th>";
+                    
                     echo " <th>Date</th>";
                     echo "  <th>Start Time</th>";
                     echo "  <th>End Time</th>";
@@ -54,7 +54,7 @@ die("Error running $sql: " . mysqli_error());
                     // $btnstate="";
                     // }
                     echo "<td>" . $row['scheduleId'] . "</td>";
-                    echo "<td>" . $row['scheduleDay'] . "</td>";
+                    
                     echo "<td>" . $row['scheduleDate'] . "</td>";
                     echo "<td>" . $row['startTime'] . "</td>";
                     echo "<td>" . $row['endTime'] . "</td>";

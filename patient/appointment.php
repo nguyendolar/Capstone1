@@ -12,7 +12,10 @@ if (isset($_GET['scheduleDate']) && isset($_GET['appid'])) {
 $res = mysqli_query($con,"SELECT a.*, b.* FROM doctorschedule a INNER JOIN patient b
 WHERE a.scheduleDate='$appdate' AND scheduleId=$appid AND b.icPatient=$session");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
+$icdoctor = $userRow['icDoctor'];
+$bacsi= mysqli_query($con,"SELECT * FROM doctor where icDoctor=$icdoctor");
 
+$bs=mysqli_fetch_array($bacsi,MYSQLI_ASSOC);
 
 	
 //INSERT
@@ -165,7 +168,7 @@ header("Location: patient/patient.php");
 											<div class="panel panel-default">
 												<div class="panel-heading">Appointment Information</div>
 												<div class="panel-body">
-													Day: <?php echo $userRow['scheduleDay'] ?><br>
+													Doctor: <?php echo $bs['doctorFirstName'] ?> <?php echo $bs['doctorLastName'] ?><br>
 													Date: <?php echo $userRow['scheduleDate'] ?><br>
 													Time: <?php echo $userRow['startTime'] ?> - <?php echo $userRow['endTime'] ?><br>
 												</div>

@@ -17,6 +17,7 @@ $row=mysqli_fetch_array($res,MYSQLI_ASSOC);
 if ($row['password'] == $password)
 {
 $_SESSION['doctorSession'] = $row['doctorId'];
+$_SESSION['doctorIC'] = $row['icDoctor'];
 ?>
 <script type="text/javascript">
 alert('Login Success');

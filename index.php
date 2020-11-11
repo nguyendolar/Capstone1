@@ -594,7 +594,7 @@ alert('User already registered. Please try again');
         <div class="copyright-bar bg-black">
             <div class="container">
                 <p class="pull-left small">© Created by <a href="https://facebook.com/nguyennguyenas" target="_blank">Nguyên Nguyên</a></p>
-                <p class="pull-right small"><a href="adminlogin.php">Admin</a></p>
+                <p class="pull-right small"><a href="admin/">Admin</a></p>
                 <br>
                 <p class="pull-right small"><a href="doctorlogin.php">Doctor</a></p>
             </div>

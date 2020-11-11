@@ -1,36 +1,32 @@
-<?php
-include_once 'assets/conn/dbconnect.php';
 
+<?php
 session_start();
 
-if (isset($_POST['login']))
+include("assets/conn/dbconnect.php");
+if(isset($_POST['submit']))
 {
-$adminId = mysqli_real_escape_string($con,$_POST['doctorId']);
-$password  = mysqli_real_escape_string($con,$_POST['password']);
-
-$res = mysqli_query($con,"SELECT * FROM admin WHERE username = '$adminId'");
-
-$row=mysqli_fetch_array($res,MYSQLI_ASSOC);
-// echo $row['password'];
-if ($row['password'] == $password)
+$ret=mysqli_query($con,"SELECT * FROM admin WHERE username='".$_POST['username']."' and password='".$_POST['password']."'");
+$num=mysqli_fetch_array($ret);
+if($num>0)
 {
-$_SESSION['adminSession'] = $row['username'];
-?>
-<script type="text/javascript">
-alert('Login Success');
-</script>
-<?php
-header("Location: admin/patientlist.php");
-} else {
-?>
+$extra="admin/dashboard.php";//
+$_SESSION['login']=$_POST['username'];
+$_SESSION['id']=$num['id'];
+$host=$_SERVER['HTTP_HOST'];
+$uri=rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
+header("location:http://$host$uri/$extra");
+exit();
+}
+else
+{ ?>
 <script type="text/javascript">
     alert("Wrong input");
 </script>
 <?php
+
 }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -49,10 +45,10 @@ header("Location: admin/patientlist.php");
                     <div id="output"></div>
                     <div class="avatar"></div>
                     <div class="form-box">
-                        <form class="form" role="form" method="POST" accept-charset="UTF-8">
-                            <input name="doctorId" type="text" placeholder="Username" required>
+                        <form action="adminlogin.php" class="form" role="form" method="POST" accept-charset="UTF-8">
+                            <input name="username" type="text" placeholder="Username" required>
                             <input name="password" type="password" placeholder="Password" required>
-                            <button class="btn btn-info btn-block login" type="submit" name="login">Login</button>
+                            <button class="btn btn-info btn-block login" type="submit" name="submit">Login</button>
                         </form>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
+$icdoctor = $_SESSION['doctorIC'];
 $res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 // insert
@@ -14,14 +15,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 if (isset($_POST['submit'])) {
 $date = mysqli_real_escape_string($con,$_POST['date']);
-$scheduleday  = mysqli_real_escape_string($con,$_POST['scheduleday']);
+
 $starttime     = mysqli_real_escape_string($con,$_POST['starttime']);
 $endtime     = mysqli_real_escape_string($con,$_POST['endtime']);
 $bookavail         = mysqli_real_escape_string($con,$_POST['bookavail']);
 
 //INSERT
-$query = " INSERT INTO doctorschedule (  scheduleDate, scheduleDay, startTime, endTime,  bookAvail)
-VALUES ( '$date', '$scheduleday', '$starttime', '$endtime', '$bookavail' ) ";
+$query = " INSERT INTO doctorschedule ( icDoctor, scheduleDate, startTime, endTime,  bookAvail)
+VALUES ( '$icdoctor','$date', '$starttime', '$endtime', '$bookavail' ) ";
 
 $result = mysqli_query($con, $query);
 // echo $result;
@@ -178,39 +179,7 @@ alert('Added fail. Please try again.');
                                    </div>
                                   </div>
                                  </div>
-                                 <div class="form-group form-group-lg">
-                                  <label class="control-label col-sm-2 requiredField" for="scheduleday">
-                                   Day
-                                   <span class="asteriskField">
-                                    *
-                                   </span>
-                                  </label>
-                                  <div class="col-sm-10">
-                                   <select class="select form-control" id="scheduleday" name="scheduleday" required>
-                                    <option value="Monday">
-                                     Monday
-                                    </option>
-                                    <option value="Tuesday">
-                                     Tuesday
-                                    </option>
-                                    <option value="Wednesday">
-                                     Wednesday
-                                    </option>
-                                    <option value="Thursday">
-                                     Thursday
-                                    </option>
-                                    <option value="Friday">
-                                     Friday
-                                    </option>
-                                    <option value="Saturday">
-                                     Saturday
-                                    </option>
-                                    <option value="Sunday">
-                                     Sunday
-                                    </option>
-                                   </select>
-                                  </div>
-                                 </div>
+                                
                                  <div class="form-group form-group-lg">
                                   <label class="control-label col-sm-2 requiredField" for="starttime">
                                    Start Time
@@ -302,7 +271,6 @@ alert('Added fail. Please try again.');
                                 <tr class="filters">
                                     <th><input type="text" class="form-control" placeholder="scheduleId" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="scheduleDate" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="scheduleDay" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="startTime." disabled></th>
                                     <th><input type="text" class="form-control" placeholder="endTime" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="bookAvail" disabled></th>
@@ -310,7 +278,7 @@ alert('Added fail. Please try again.');
                             </thead>
                             
                             <?php 
-                            $result=mysqli_query($con,"SELECT * FROM doctorschedule");
+                            $result=mysqli_query($con,"SELECT * FROM doctorschedule WHERE icDoctor=$icdoctor");
                             
 
                                   
@@ -321,7 +289,6 @@ alert('Added fail. Please try again.');
                                 echo "<tr>";
                                     echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
                                     echo "<td>" . $doctorschedule['scheduleDate'] . "</td>";
-                                    echo "<td>" . $doctorschedule['scheduleDay'] . "</td>";
                                     echo "<td>" . $doctorschedule['startTime'] . "</td>";
                                     echo "<td>" . $doctorschedule['endTime'] . "</td>";
                                     echo "<td>" . $doctorschedule['bookAvail'] . "</td>";
@@ -335,7 +302,7 @@ alert('Added fail. Please try again.');
                        echo "</table>";
                        echo "<div class='panel panel-default'>";
                        echo "<div class='col-md-offset-3 pull-right'>";
-                       echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
+                      
                         echo "</div>";
                         echo "</div>";
                         ?>

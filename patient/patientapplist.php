@@ -194,9 +194,9 @@ echo "<table class='table table-hover'>";
 echo "<thead>";
 echo "<tr>";
 echo "<th>App Id</th>";
-echo "<th>patientIc </th>";
-echo "<th>patientLastName </th>";
-echo "<th>scheduleDay </th>";
+echo "<th>Doctor </th>";
+
+
 echo "<th>scheduleDate </th>";
 echo "<th>startTime </th>";
 echo "<th>endTime </th>";
@@ -222,7 +222,7 @@ echo "<tr>";
 echo "<td>" . $userRow['appId'] . "</td>";
 echo "<td>" . $userRow['patientIc'] . "</td>";
 echo "<td>" . $userRow['patientLastName'] . "</td>";
-echo "<td>" . $userRow['scheduleDay'] . "</td>";
+
 echo "<td>" . $userRow['scheduleDate'] . "</td>";
 echo "<td>" . $userRow['startTime'] . "</td>";
 echo "<td>" . $userRow['endTime'] . "</td>";
