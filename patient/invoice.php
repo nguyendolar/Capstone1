@@ -4,12 +4,9 @@ include_once '../assets/conn/dbconnect.php';
 if (isset($_GET['appid'])) {
 $appid=$_GET['appid'];
 }
-$res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
-JOIN appointment b
-On a.icPatient = b.patientIc
-JOIN doctorschedule c
-On b.scheduleId=c.scheduleId
-WHERE b.appId  =".$appid);
+$res=mysqli_query($con, "SELECT a.*, b.*,c.*,d.*
+FROM patient a, appointment b, doctorschedule c, doctor d 
+WHERE b.appId ='$appid' AND b.scheduleId=c.scheduleId AND a.icPatient = b.patientIc AND c.icDoctor=d.icDoctor");
 
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 ?>
@@ -46,11 +43,11 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table>
                             <tr>
                                 <td>
-                                    <?php echo $userRow['patientAddress'];?>
+                                <?php echo $userRow['patientFirstName'];?> <?php echo $userRow['patientLastName'];?>
                                 </td>
                                 
-                                <td><?php echo $userRow['patientIc'];?><br>
-                                    <?php echo $userRow['patientFirstName'];?> <?php echo $userRow['patientLastName'];?><br>
+                                <td><?php echo $userRow['patientAddress'];?><br>
+                                    <?php echo $userRow['patientPhone'];?><br>
                                     <?php echo $userRow['patientEmail'];?>
                                 </td>
                             </tr>
@@ -92,11 +89,11 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
                 <tr class="item">
                     <td>
-                        Appointment Day
+                        Doctor
                     </td>
                     
                     <td>
-                        <?php echo $userRow['scheduleDay'];?>
+                        <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?>, Specialist <?php echo $userRow['doctorFirstName'];?>
                     </td>
                 </tr>
                 

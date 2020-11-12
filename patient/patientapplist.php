@@ -203,13 +203,10 @@ echo "<th>endTime </th>";
 echo "<th>Print </th>";
 echo "</tr>";
 echo "</thead>";
-$res = mysqli_query($con, "SELECT a.*, b.*,c.*
-		FROM patient a
-		JOIN appointment b
-		On a.icPatient = b.patientIc
-		JOIN doctorschedule c
-		On b.scheduleId=c.scheduleId
-		WHERE b.patientIc ='$session'");
+$res = mysqli_query($con, "SELECT a.*, b.*,c.*,d.*
+		FROM patient a, appointment b, doctorschedule c, doctor d 
+        WHERE b.patientIc ='$session' AND b.scheduleId=c.scheduleId AND a.icPatient = b.patientIc AND c.icDoctor=d.icDoctor
+        ORDER BY b.appId DESC");
 
 if (!$res) {
 die("Error running $sql: " . mysqli_error());
@@ -220,8 +217,8 @@ while ($userRow = mysqli_fetch_array($res)) {
 echo "<tbody>";
 echo "<tr>";
 echo "<td>" . $userRow['appId'] . "</td>";
-echo "<td>" . $userRow['patientIc'] . "</td>";
-echo "<td>" . $userRow['patientLastName'] . "</td>";
+echo "<td>" . $userRow['doctorLastName'] . "</td>";
+
 
 echo "<td>" . $userRow['scheduleDate'] . "</td>";
 echo "<td>" . $userRow['startTime'] . "</td>";

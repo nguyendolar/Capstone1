@@ -2,7 +2,7 @@
 session_start();
 include_once '../assets/conn/dbconnect.php';
 $q = $_GET['q'];
-$res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q'");
+$res = mysqli_query($con,"SELECT a.*,b.* FROM doctorschedule a,doctor b WHERE a.scheduleDate='$q' AND a.icDoctor=b.icDoctor ORDER BY a.scheduleId DESC");
 if (!$res) {
 die("Error running $sql: " . mysqli_error());
 }
@@ -22,7 +22,7 @@ die("Error running $sql: " . mysqli_error());
             echo " <thead>";
                 echo " <tr>";
                     echo " <th>App Id</th>";
-                    
+                    echo " <th>Doctor</th>";
                     echo " <th>Date</th>";
                     echo "  <th>Start Time</th>";
                     echo "  <th>End Time</th>";
@@ -54,7 +54,7 @@ die("Error running $sql: " . mysqli_error());
                     // $btnstate="";
                     // }
                     echo "<td>" . $row['scheduleId'] . "</td>";
-                    
+                    echo "<td>" . $row['doctorFirstName'] . " " . $row['doctorLastName'] . "</td>";
                     echo "<td>" . $row['scheduleDate'] . "</td>";
                     echo "<td>" . $row['startTime'] . "</td>";
                     echo "<td>" . $row['endTime'] . "</td>";

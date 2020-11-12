@@ -7,6 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
+$icdoctor = $_SESSION['doctorIC'];
 $res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
@@ -125,20 +126,23 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="filters">
-                                    <th><input type="text" class="form-control" placeholder="patient Ic" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Password" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="ContactNo." disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Phone" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Address" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="DOB" disabled></th>
                                     <!-- <th><input type="text" class="form-control" placeholder="Email" disabled></th> -->
                                     <th><input type="text" class="form-control" placeholder="Gender" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Status" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Birthdate" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Address" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Email" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="AppId" disabled></th>
+                                    
                                 </tr>
                             </thead>
                             
                             <?php 
-                            $result=mysqli_query($con,"SELECT * FROM patient");
+                            $result=mysqli_query($con,"SELECT a.*, b.*,c.*,d.*
+                            FROM patient a, appointment b, doctorschedule c, doctor d 
+                            WHERE d.icDoctor ='$icdoctor' AND b.scheduleId=c.scheduleId AND a.icPatient = b.patientIc AND c.icDoctor=d.icDoctor
+                            ORDER BY b.appId DESC");
                             
 
                                   
@@ -147,15 +151,15 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                               
                                 echo "<tbody>";
                                 echo "<tr>";
-                                    echo "<td>" . $patientRow['icPatient'] . "</td>";
-                                    echo "<td>" . $patientRow['patientLastName'] . "</td>";
-                                    echo "<td>" . $patientRow['password'] . "</td>";
+                                    echo "<td>" . $patientRow['patientFirstName'] . " " . $patientRow['patientLastName'] . "</td>";
                                     echo "<td>" . $patientRow['patientPhone'] . "</td>";
+                                    echo "<td>" . $patientRow['patientAddress'] . "</td>";
+                                    echo "<td>" . $patientRow['patientDOB'] . "</td>";
                                     // echo "<td>" . $patientRow['patientEmail'] . "</td>";
                                     echo "<td>" . $patientRow['patientGender'] . "</td>";
-                                    echo "<td>" . $patientRow['patientMaritialStatus'] . "</td>";
-                                    echo "<td>" . $patientRow['patientDOB'] . "</td>";
-                                    echo "<td>" . $patientRow['patientAddress'] . "</td>";
+                                    echo "<td>" . $patientRow['patientEmail'] . "</td>";
+                                    echo "<td>" . $patientRow['appId'] . "</td>";
+                                   
                                     echo "<form method='POST'>";
                                     echo "<td class='text-center'><a href='#' id='".$patientRow['icPatient']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
                             </td>";

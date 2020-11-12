@@ -278,7 +278,7 @@ alert('Added fail. Please try again.');
                             </thead>
                             
                             <?php 
-                            $result=mysqli_query($con,"SELECT * FROM doctorschedule WHERE icDoctor=$icdoctor");
+                            $result=mysqli_query($con,"SELECT * FROM doctorschedule WHERE icDoctor=$icdoctor ORDER BY scheduleId DESC");
                             
 
                                   

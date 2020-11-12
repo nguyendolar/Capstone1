@@ -7,6 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
+$icdoctor = $_SESSION['doctorIC']; 
 $res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
@@ -114,14 +115,13 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="filters">
-                                    <th><input type="text" class="form-control" placeholder="patient Ic" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Contact No." disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Email" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Day" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="AppId" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Date" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Patient" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Start" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="End" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Symptom" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Comment" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Status" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Complete" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Delete" disabled></th>
@@ -129,13 +129,10 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                             </thead>
                             
                             <?php 
-                            $res=mysqli_query($con,"SELECT a.*, b.*,c.*
-                                                    FROM patient a
-                                                    JOIN appointment b
-                                                    On a.icPatient = b.patientIc
-                                                    JOIN doctorschedule c
-                                                    On b.scheduleId=c.scheduleId
-                                                    Order By appId desc");
+                            $res=mysqli_query($con,"SELECT a.*, b.*,c.*,d.*
+                            FROM patient a, appointment b, doctorschedule c, doctor d 
+                            WHERE d.icDoctor ='$icdoctor' AND b.scheduleId=c.scheduleId AND a.icPatient = b.patientIc AND c.icDoctor=d.icDoctor
+                            ORDER BY b.appId DESC ");
                                   if (!$res) {
                                     printf("Error: %s\n", mysqli_error($con));
                                     exit();
@@ -163,14 +160,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
                                 echo "<tbody>";
                                 echo "<tr class='$status'>";
-                                    echo "<td>" . $appointment['patientIc'] . "</td>";
-                                    echo "<td>" . $appointment['patientLastName'] . "</td>";
-                                    echo "<td>" . $appointment['patientPhone'] . "</td>";
-                                    echo "<td>" . $appointment['patientEmail'] . "</td>";
-                                    echo "<td>" . $appointment['scheduleDay'] . "</td>";
+                                    echo "<td>" . $appointment['appId'] . "</td>";
                                     echo "<td>" . $appointment['scheduleDate'] . "</td>";
+                                    echo "<td>" . $appointment['patientFirstName'] . " " . $appointment['patientLastName'] . "</td>";
                                     echo "<td>" . $appointment['startTime'] . "</td>";
                                     echo "<td>" . $appointment['endTime'] . "</td>";
+                                    echo "<td>" . $appointment['appSymptom'] . "</td>";
+                                    echo "<td>" . $appointment['appComment'] . "</td>";
+                                    
                                     echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
                                     echo "<form method='POST'>";
                                     echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
