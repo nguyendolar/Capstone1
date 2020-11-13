@@ -7,7 +7,7 @@ check_login();
 
 if(isset($_GET['del']))
 		  {
-		          mysqli_query($con,"delete from users where id = '".$_GET['id']."'");
+		          mysqli_query($con,"delete from patien where id = '".$_GET['id']."'");
                   $_SESSION['msg']="data deleted !!";
 		  }
 ?>

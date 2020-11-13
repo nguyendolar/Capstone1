@@ -126,14 +126,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="filters">
-                                    <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Phone" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Address" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="DOB" disabled></th>
-                                    <!-- <th><input type="text" class="form-control" placeholder="Email" disabled></th> -->
-                                    <th><input type="text" class="form-control" placeholder="Gender" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Email" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="AppId" disabled></th>
+                                            <th><input type="text" class="form-control" placeholder="Name" disabled></th>
+                                            <th><input type="text" class="form-control" placeholder="Phone" disabled></th>
+                                            <th><input type="text" class="form-control" placeholder="Address" disabled></th>
+                                            <th><input type="text" class="form-control" placeholder="DOB" disabled></th>
+                                            <!-- <th><input type="text" class="form-control" placeholder="Email" disabled></th> -->
+                                            <th><input type="text" class="form-control" placeholder="Gender" disabled></th>
+                                            <th><input type="text" class="form-control" placeholder="Email" disabled></th>
+                                            <th><input type="text" class="form-control" placeholder="AppId" disabled></th>
                                     
                                 </tr>
                             </thead>

@@ -4,7 +4,11 @@ error_reporting(0);
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
-
+if(isset($_GET['del']))
+		  {
+		          mysqli_query($con,"DELETE from patient where icPatient = '".$_GET['id']."'");
+                  $_SESSION['msg']="data deleted !!";
+		  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,34 +62,37 @@ check_login();
 <thead>
 <tr>
 <th class="center">#</th>
-<th>Patient Name</th>
-<th>Patient Contact Number</th>
-<th>Patient Gender </th>
-<th>Creation Date </th>
-<th>Updation Date </th>
+<th>Name</th>
+<th>Birthday</th>
+<th>Address</th>
+<th>Gender</th>
+<th>Phone</th>
+<th>Email</th>
+<th>MaritialStatus</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
 <?php
 
-$sql=mysqli_query($con,"select * from tblpatient");
+$sql=mysqli_query($con,"select * from patient");
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
 {
 ?>
 <tr>
 <td class="center"><?php echo $cnt;?>.</td>
-<td class="hidden-xs"><?php echo $row['PatientName'];?></td>
-<td><?php echo $row['PatientContno'];?></td>
-<td><?php echo $row['PatientGender'];?></td>
-<td><?php echo $row['CreationDate'];?></td>
-<td><?php echo $row['UpdationDate'];?>
-</td>
+<td class="hidden-xs"><?php echo $row['patientFirstName'];?> <?php echo $row['patientLastName'];?></td>
+<td><?php echo $row['patientDOB'];?></td>
+<td><?php echo $row['patientAddress'];?></td>
+<td><?php echo $row['patientGender'];?></td>
+<td><?php echo $row['patientPhone'];?></td>
+<td><?php echo $row['patientEmail'];?></td>
+<td><?php echo $row['patientMaritialStatus'];?></td>
 <td>
 
 <a href="view-patient.php?viewid=<?php echo $row['ID'];?>"><i class="fa fa-eye"></i></a>
-
+<a href="manage-patient.php?id=<?php echo $row['icPatient']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
 </td>
 </tr>
 <?php 

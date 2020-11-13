@@ -8,7 +8,9 @@ check_login();
 
 if(isset($_GET['del']))
 		  {
-		          mysqli_query($con,"delete from doctors where id = '".$_GET['id']."'");
+				  mysqli_query($con,"DELETE from appointment where scheduleId=(SELECT scheduleId from doctorschedule where icDoctor = '".$_GET['id']."')");
+				  mysqli_query($con,"DELETE from doctorschedule where icDoctor = '".$_GET['id']."'");
+				  mysqli_query($con,"DELETE from doctor where icDoctor = '".$_GET['id']."'");
                   $_SESSION['msg']="data deleted !!";
 		  }
 ?>
@@ -103,34 +105,11 @@ while($row=mysqli_fetch_array($sql))
 												
 												<td >
 												<div class="visible-md visible-lg hidden-sm hidden-xs">
-							<a href="edit-doctor.php?id=<?php echo $row['id'];?>" class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Edit"><i class="fa fa-pencil"></i></a>
+							<a href="edit-doctor.php?id=<?php echo $row['icDoctor'];?>" class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Edit"><i class="fa fa-pencil"></i></a>
 													
-	<a href="manage-doctors.php?id=<?php echo $row['id']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
+							<a href="manage-doctors.php?id=<?php echo $row['icDoctor']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
 												</div>
-												<div class="visible-xs visible-sm hidden-md hidden-lg">
-													<div class="btn-group" dropdown is-open="status.isopen">
-														<button type="button" class="btn btn-primary btn-o btn-sm dropdown-toggle" dropdown-toggle>
-															<i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
-														</button>
-														<ul class="dropdown-menu pull-right dropdown-light" role="menu">
-															<li>
-																<a href="#">
-																	Edit
-																</a>
-															</li>
-															<li>
-																<a href="#">
-																	Share
-																</a>
-															</li>
-															<li>
-																<a href="#">
-																	Remove
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div></td>
+												</td>
 											</tr>
 											
 											<?php 

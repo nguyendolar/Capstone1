@@ -65,7 +65,7 @@ check_login();
 											<h2 class="StepTitle">Manage Users</h2>
 											
 											<p class="links cl-effect-1">
-												<a href="manage-users.php">
+												<a href="manage-patient.php">
 												<?php $result = mysqli_query($con,"SELECT * FROM patient ");
 $num_rows = mysqli_num_rows($result);
 {

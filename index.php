@@ -419,7 +419,7 @@ alert('User already registered. Please try again');
                         <h4 class="modal-title">News</h4>
                     </div>
                     <!-- modal body start -->
-                    <div class="modal-body">
+                    <div class="modal-bodyN">
                         <!-- form start -->
                         <div class="container" id="wrap">
                             <div class="row">
@@ -469,7 +469,7 @@ alert('User already registered. Please try again');
                         <h4 class="modal-title">Doctors</h4>
                     </div>
                     <!-- modal body start -->
-                    <div class="modal-body">
+                    <div class="modal-bodyN">
                     
                         <!-- form start -->
                         <div class="container" id="wrap">
