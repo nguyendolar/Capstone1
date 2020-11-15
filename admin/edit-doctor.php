@@ -7,6 +7,7 @@ check_login();
 $did=intval($_GET['id']);// get doctor id
 if(isset($_POST['submit']))
 {
+$specialist = $_POST['Doctorspecialization'];
 $docFname=$_POST['docFname'];
 $docLname=$_POST['docLname'];
 $phone=$_POST['phone'];
@@ -14,7 +15,7 @@ $address=$_POST['address'];
 $email=$_POST['email'];
 $dob=$_POST['DOB'];
 
-$sql=mysqli_query($con,"Update doctor set doctorFirstName='$docFname',doctorLastName='$docLname',doctorPhone='$phone',doctorAddress='$address',doctorEmail='$email',doctorDOB='$dob' where icDoctor='$did'");
+$sql=mysqli_query($con,"Update doctor set doctorFirstName='$docFname',doctorLastName='$docLname',doctorSpecialist='$specialist',doctorPhone='$phone',doctorAddress='$address',doctorEmail='$email',doctorDOB='$dob' where icDoctor='$did'");
 if($sql)
 {
 $msg="Doctor Details updated Successfully";
@@ -82,10 +83,27 @@ $msg="Doctor Details updated Successfully";
 													<h2 class="panel-title"><b>Edit Doctor</b></h2>
 												</div>
 												<div class="panel-body">
-													<?php $sql=mysqli_query($con,"select * from doctor where icDoctor='$did'");
+													<?php $sql=mysqli_query($con,"select a.*,b.* from doctor a,specialist b where a.icDoctor='$did' and a.doctorSpecialist=b.id");
 													while($data=mysqli_fetch_array($sql)) { ?>
 
 													<form role="form" name="adddoc" method="post" onSubmit="return valid();">
+													<div class="form-group">
+															<label for="DoctorSpecialization">
+																Specialization
+															</label>
+												<select name="Doctorspecialization" class="form-control" required="true">
+																<option value="<?php echo $data['doctorSpecialist'] ?>"><?php echo $data['name'] ?></option>
+																	<?php $ret=mysqli_query($con,"select * from specialist");
+																	while($row=mysqli_fetch_array($ret))
+																	{
+																	?>
+																<option value="<?php echo htmlentities($row['id']);?>">
+																	<?php echo htmlentities($row['name']);?>
+																</option>
+																<?php } ?>
+																
+															</select>
+														</div>
 													<div class="form-group">
 															<label for="doctorname">
 																 First Name

@@ -87,7 +87,7 @@ if(isset($_GET['del']))
 										</thead>
 										<tbody>
 <?php
-$sql=mysqli_query($con,"select * from doctor");
+$sql=mysqli_query($con,"select a.*,b.* from doctor a,specialist b where a.doctorSpecialist=b.id");
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
 {
@@ -95,7 +95,7 @@ while($row=mysqli_fetch_array($sql))
 
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
-												<td class="hidden-xs"><?php echo $row['specilization'];?></td>
+												<td class="hidden-xs"><?php echo $row['name'];?></td>
 												<td><?php echo $row['doctorFirstName'];?> <?php echo $row['doctorLastName'];?></td>
 												<td><?php echo $row['doctorPhone'];?></td>
 												<td><?php echo $row['doctorAddress'];?></td>

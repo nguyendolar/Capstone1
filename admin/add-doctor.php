@@ -7,13 +7,15 @@ check_login();
 
 if(isset($_POST['submit']))
 {	$docspecialization=$_POST['Doctorspecialization'];
-$docname=$_POST['docname'];
-$docaddress=$_POST['clinicaddress'];
-$docfees=$_POST['docfees'];
-$doccontactno=$_POST['doccontact'];
-$docemail=$_POST['docemail'];
-$password=md5($_POST['npass']);
-$sql=mysqli_query($con,"insert into doctors(specilization,doctorName,address,docFees,contactno,docEmail,password) values('$docspecialization','$docname','$docaddress','$docfees','$doccontactno','$docemail','$password')");
+$docFname=$_POST['docFname'];
+$docLname=$_POST['docLname'];
+$address=$_POST['address'];
+$phone=$_POST['phone'];
+$email=$_POST['docemail'];
+$dob=$_POST['DOB'];
+$id=$_POST['id'];
+$password=$_POST['npass'];
+$sql=mysqli_query($con,"insert into doctor(password,doctorId,doctorFirstName,doctorLastName,doctorSpecialist,doctorAddress,doctorPhone,doctorEmail,doctorDOB) values('$password','$id','$docFname','$docLname','$docspecialization','$address','$phone','$email','$dob')");
 if($sql)
 {
 echo "<script>alert('Doctor info added Successfully');</script>";
@@ -114,16 +116,16 @@ error:function (){}
 													<form role="form" name="adddoc" method="post" onSubmit="return valid();">
 														<div class="form-group">
 															<label for="DoctorSpecialization">
-																Doctor Specialization
+																Specialization
 															</label>
-							<select name="Doctorspecialization" class="form-control" required="true">
-																<option value="">Select Specialization</option>
-<?php $ret=mysqli_query($con,"select * from doctorspecilization");
-while($row=mysqli_fetch_array($ret))
-{
-?>
-																<option value="<?php echo htmlentities($row['specilization']);?>">
-																	<?php echo htmlentities($row['specilization']);?>
+												<select name="Doctorspecialization" class="form-control" required="true">
+																<option value="">------//------</option>
+																	<?php $ret=mysqli_query($con,"select * from specialist");
+																	while($row=mysqli_fetch_array($ret))
+																	{
+																	?>
+																<option value="<?php echo htmlentities($row['id']);?>">
+																	<?php echo htmlentities($row['name']);?>
 																</option>
 																<?php } ?>
 																
@@ -132,43 +134,54 @@ while($row=mysqli_fetch_array($ret))
 
 <div class="form-group">
 															<label for="doctorname">
-																 Doctor Name
+																 First Name
 															</label>
-					<input type="text" name="docname" class="form-control"  placeholder="Enter Doctor Name" required="true">
+					<input type="text" name="docFname" class="form-control"  placeholder="Enter First Name" required="true">
 														</div>
 
-
+														<div class="form-group">
+															<label for="doctorname">
+																 Last Name
+															</label>
+					<input type="text" name="docLname" class="form-control"  placeholder="Enter Last Name" required="true">
+														</div>
 <div class="form-group">
 															<label for="address">
-																 Doctor Clinic Address
+																  Address
 															</label>
-					<textarea name="clinicaddress" class="form-control"  placeholder="Enter Doctor Clinic Address" required="true"></textarea>
+					<textarea name="address" class="form-control"  placeholder="Enter Address" required="true"></textarea>
 														</div>
 <div class="form-group">
 															<label for="fess">
-																 Doctor Consultancy Fees
+																 Number Phone
 															</label>
-					<input type="text" name="docfees" class="form-control"  placeholder="Enter Doctor Consultancy Fees" required="true">
+					<input type="text" name="phone" class="form-control"  placeholder="Enter Number Phone" required="true">
 														</div>
 	
-<div class="form-group">
-									<label for="fess">
-																 Doctor Contact no
-															</label>
-					<input type="text" name="doccontact" class="form-control"  placeholder="Enter Doctor Contact no" required="true">
-														</div>
+
 
 <div class="form-group">
 									<label for="fess">
-																 Doctor Email
+																 Email
 															</label>
-<input type="email" id="docemail" name="docemail" class="form-control"  placeholder="Enter Doctor Email id" required="true" onBlur="checkemailAvailability()">
+<input type="email" id="email" name="docemail" class="form-control"  placeholder="Enter Email " required="true" onBlur="checkemailAvailability()">
 <span id="email-availability-status"></span>
 </div>
+<div class="form-group">
+									<label for="fess">
+																 Birthday
+															</label>
+					<input type="date" name="DOB" class="form-control"  placeholder="Enter birthday" required="true">
+														</div>
 
 
 
-														
+														<div class="form-group">
+									<label for="fess">
+																 Id Doctor
+															</label>
+					<input type="number" name="id" class="form-control"  placeholder="Enter Id Doctor" required="true">
+														</div>														
 														<div class="form-group">
 															<label for="exampleInputPassword1">
 																 Password

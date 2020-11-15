@@ -64,94 +64,47 @@ check_login();
 									<table class="table table-hover" id="sample-table-1">
 										<thead>
 											<tr>
-												<th class="center">#</th>
-												<th class="hidden-xs">Doctor Name</th>
-												<th>Patient Name</th>
-												<th>Specialization</th>
-												<th>Consultancy Fee</th>
-												<th>Appointment Date / Time </th>
-												<th>Appointment Creation Date  </th>
-												<th>Current Status</th>
+												<th class="center">AppId</th>
+												<th class="hidden-xs">Date</th>
+												<th>startTime</th>
+												<th>endTime</th>
+												<th>Doctor</th>
+												<th>Patien</th>
+												<th>Status</th>
+												
 												<th>Action</th>
 												
 											</tr>
 										</thead>
 										<tbody>
 <?php
-$sql=mysqli_query($con,"select doctors.doctorName as docname,users.fullName as pname,appointment.*  from appointment join doctors on doctors.id=appointment.doctorId join users on users.id=appointment.userId ");
-$cnt=1;
+$sql=mysqli_query($con,"SELECT a.*, b.*,c.*,d.*
+FROM patient a, appointment b, doctorschedule c, doctor d 
+WHERE b.scheduleId=c.scheduleId AND a.icPatient = b.patientIc AND c.icDoctor=d.icDoctor
+ORDER BY b.appId DESC");
+
 while($row=mysqli_fetch_array($sql))
 {
 ?>
 
 											<tr>
-												<td class="center"><?php echo $cnt;?>.</td>
-												<td class="hidden-xs"><?php echo $row['docname'];?></td>
-												<td class="hidden-xs"><?php echo $row['pname'];?></td>
-												<td><?php echo $row['doctorSpecialization'];?></td>
-												<td><?php echo $row['consultancyFees'];?></td>
-												<td><?php echo $row['appointmentDate'];?> / <?php echo
-												 $row['appointmentTime'];?>
-												</td>
-												<td><?php echo $row['postingDate'];?></td>
-												<td>
-<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))  
-{
-	echo "Active";
-}
-if(($row['userStatus']==0) && ($row['doctorStatus']==1))  
-{
-	echo "Cancel by Patient";
-}
-
-if(($row['userStatus']==1) && ($row['doctorStatus']==0))  
-{
-	echo "Cancel by Doctor";
-}
-
-
-
-												?></td>
+												<td class="center"><?php echo $row['appId'];?>.</td>
+												<td class="hidden-xs"><?php echo $row['scheduleDate'];?></td>
+												<td class="hidden-xs"><?php echo $row['startTime'];?></td>
+												<td><?php echo $row['endTime'];?></td>
+												<td><?php echo $row['doctorFirstName'];?> <?php echo $row['doctorLastName'];?></td>
+												<td><?php echo $row['patientFirstName'];?> <?php echo $row['patientLastName'];?></td>
+												<td><?php echo $row['status'];?></td>
+												
 												<td >
-												<div class="visible-md visible-lg hidden-sm hidden-xs">
-							<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))  
-{ 
-
-													
-echo "No Action yet";
-	 } else {
-
-		echo "Canceled";
-		} ?>
-												</div>
-												<div class="visible-xs visible-sm hidden-md hidden-lg">
-													<div class="btn-group" dropdown is-open="status.isopen">
-														<button type="button" class="btn btn-primary btn-o btn-sm dropdown-toggle" dropdown-toggle>
-															<i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
-														</button>
-														<ul class="dropdown-menu pull-right dropdown-light" role="menu">
-															<li>
-																<a href="#">
-																	Edit
-																</a>
-															</li>
-															<li>
-																<a href="#">
-																	Share
-																</a>
-															</li>
-															<li>
-																<a href="#">
-																	Remove
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div></td>
+												
+												<a href="view-patient.php?viewid=<?php echo $row['ID'];?>"><i class="fa fa-eye"></i></a>
+<a href="manage-patient.php?id=<?php echo $row['icPatient']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
+												</td>
 											</tr>
 											
 											<?php 
-$cnt=$cnt+1;
+
 											 }?>
 											
 											

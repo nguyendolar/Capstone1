@@ -6,13 +6,13 @@ include('include/checklogin.php');
 check_login();
 if(isset($_POST['submit']))
 {
-$sql=mysqli_query($con,"insert into doctorSpecilization(specilization) values('".$_POST['doctorspecilization']."')");
+$sql=mysqli_query($con,"insert into specialist(name) values('".$_POST['doctorspecilization']."')");
 $_SESSION['msg']="Doctor Specialization added successfully !!";
 }
 
 if(isset($_GET['del']))
 		  {
-		          mysqli_query($con,"delete from doctorSpecilization where id = '".$_GET['id']."'");
+		          mysqli_query($con,"delete from specialist where id = '".$_GET['id']."'");
                   $_SESSION['msg']="data deleted !!";
 		  }
 ?>
@@ -115,15 +115,13 @@ if(isset($_GET['del']))
 											<tr>
 												<th class="center">#</th>
 												<th>Specialization</th>
-												<th class="hidden-xs">Creation Date</th>
-												<th>Updation Date</th>
 												<th>Action</th>
 												
 											</tr>
 										</thead>
 										<tbody>
 <?php
-$sql=mysqli_query($con,"select * from doctorSpecilization");
+$sql=mysqli_query($con,"select * from specialist order by id desc");
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
 {
@@ -131,9 +129,8 @@ while($row=mysqli_fetch_array($sql))
 
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
-												<td class="hidden-xs"><?php echo $row['specilization'];?></td>
-												<td><?php echo $row['creationDate'];?></td>
-												<td><?php echo $row['updationDate'];?>
+												<td class="hidden-xs"><?php echo $row['name'];?></td>
+												
 												</td>
 												
 												<td >
