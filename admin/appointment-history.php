@@ -4,6 +4,12 @@ error_reporting(0);
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
+if(isset($_GET['del']))
+		  {
+				  mysqli_query($con,"DELETE from appointment where appId='".$_GET['id']."'");
+
+                  $_SESSION['msg']="data deleted !!";
+		  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,7 +105,7 @@ while($row=mysqli_fetch_array($sql))
 												<td >
 												
 												<a href="view-patient.php?viewid=<?php echo $row['ID'];?>"><i class="fa fa-eye"></i></a>
-<a href="manage-patient.php?id=<?php echo $row['icPatient']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
+												<a href="appointment-history.php?id=<?php echo $row['appId']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
 												</td>
 											</tr>
 											
