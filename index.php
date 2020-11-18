@@ -427,7 +427,7 @@ alert('User already registered. Please try again');
                                     
                                     <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
                                     <?php
-                                        $s="SELECT * FROM post ORDER BY  postCreate DESC ";
+                                        $s="SELECT * FROM post ORDER BY  postID DESC ";
                                          $thuchiens= mysqli_query($con,$s);
                                         
                                     ?>
@@ -441,11 +441,11 @@ alert('User already registered. Please try again');
                                                 <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
                                                 <?php echo "<img src='assets/img/".$posts['postImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
                                                 </div>
-                                                <div class="col-md-5">
-                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $posts['postTitle']; ?> </a>
-                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><?php echo $posts['postBody']?></h4>
                                                 
-                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Created at :</b><?php echo $posts['postCreate']?></h4></div></div>
+                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $posts['postTitle']; ?> </a>
+                                                <h5><?php echo substr($posts['postBody'],0,200) . "........ <a href='#'>Read more</a>" ;?></h5>
+                                                
+                                                <h5 style="color:#202020; font-family:'typo' ;font-size:15px" class="title1"><b>Created at :</b><?php echo $posts['postCreate']?></h5></div>
                                             </p>
                                             
                                         </div>
@@ -490,12 +490,12 @@ alert('User already registered. Please try again');
                                                 <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
                                                 <?php echo "<img src='doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
                                                 </div>
-                                                <div class="col-md-5">
+                                                
                                                 <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorFirstName']; ?> <?php echo $rowss['doctorLastName']; ?></a>
                                                 <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Specialize :</b><?php echo $rowss['name']?></h4>
                                                 <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Phone :</b><?php echo $rowss['doctorPhone']?></h4>
                                                 <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Email:</b><?php echo $rowss['doctorEmail'] ?></h4>
-                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Address :</b><?php echo $rowss['doctorAddress']?></h4></div></div>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Address :</b><?php echo $rowss['doctorAddress']?></h4></div>
                                             </p>
                                             
                                         </div>

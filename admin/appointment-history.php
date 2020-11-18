@@ -32,6 +32,7 @@ if(isset($_GET['del']))
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
 	</head>
 	<body>
+	
 		<div id="app">		
 <?php include('include/sidebar.php');?>
 			<div class="app-content">
@@ -104,7 +105,7 @@ while($row=mysqli_fetch_array($sql))
 												
 												<td >
 												
-												<a href="view-patient.php?viewid=<?php echo $row['ID'];?>"><i class="fa fa-eye"></i></a>
+												<a href="#" data-target="#myApp"><i class="fa fa-eye"></i></a>
 												<a href="appointment-history.php?id=<?php echo $row['appId']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
 												</td>
 											</tr>
@@ -163,6 +164,7 @@ while($row=mysqli_fetch_array($sql))
 				FormElements.init();
 			});
 		</script>
+		
 		<!-- end: JavaScript Event Handlers for this page -->
 		<!-- end: CLIP-TWO JAVASCRIPTS -->
 	</body>

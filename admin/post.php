@@ -9,7 +9,7 @@ check_login();
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Admin  | Dashboard</title>
+		<title>B/w dates reports | Admin</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -25,7 +25,7 @@ check_login();
 		<link rel="stylesheet" href="assets/css/styles.css">
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-
+		<script src="../resources/ckeditor/ckeditor.js"></script>
 
 	</head>
 	<body>
@@ -42,105 +42,100 @@ check_login();
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Admin | Dashboard</h1>
+									<h1 class="mainTitle">Between Dates | Reports</h1>
 																	</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>Admin</span>
+										<span>Between Dates</span>
 									</li>
 									<li class="active">
-										<span>Dashboard</span>
+										<span>Reports</span>
 									</li>
 								</ol>
 							</div>
 						</section>
 						<!-- end: PAGE TITLE -->
 						<!-- start: BASIC EXAMPLE -->
-							<div class="container-fluid container-fullw bg-white">
+						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">Manage Users</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="manage-patient.php">
-												<?php $result = mysqli_query($con,"SELECT * FROM patient ");
-$num_rows = mysqli_num_rows($result);
-{
-?>
-											Total Patients :<?php echo htmlentities($num_rows);  } ?>		
-												</a>
-											</p>
+								<div class="col-md-12">
+									
+									<div class="row margin-top-30">
+										<div class="col-lg-8 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">Add News</h5>
+												</div>
+												<div class="panel-body">
+									
+													<form role="form" method="post" action="post.php" enctype="multipart/form-data">
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																 Title : 
+															</label>
+															<input type="text" name="txtTitle"  class="text-input">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																 Image : 
+															</label>
+															<input type="hidden" name="size" value="1000000"> 
+        													<input type="file" name="image"> 
+														</div>
+													<div class="form-group">
+															<label for="exampleInputPassword1">
+																 Body :
+															</label>
+															<textarea class="text-input" name="txtBody"  id="content-body"></textarea>
+
+														</div>	
+														
+														
+														<button type="submit" name="btnRegister" id="submit" class="btn btn-o btn-primary">
+															Add
+														</button>
+													</form>
+													<?php
+    
+    if(isset($_POST["btnRegister"])){
+        $title=$_POST["txtTitle"];
+        $body=$_POST["txtBody"];
+        $image = $_FILES['image']['name'];
+        $target = "../assets/img/".basename($image);
+        if(empty($title) || empty($body) ){
+            echo "Bạn vui lòng nhập thông tin";
+        }
+        else{
+            
+
+
+          $sql = "INSERT INTO post(postTitle,postBody,postImg) VALUES ('$title','$body','$image')";
+          mysqli_query($con,$sql);
+          if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+            echo '<script language="javascript">alert("Đã upload thành công!");</script>';
+            }else{
+            echo '<script language="javascript">alert("Đã upload thất bại!");</script>';
+            } 
+        }
+    }
+    ?>
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-users fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">Manage Doctors</h2>
-										
-											<p class="cl-effect-1">
-												<a href="manage-doctors.php">
-												<?php $result1 = mysqli_query($con,"SELECT * FROM doctor ");
-$num_rows1 = mysqli_num_rows($result1);
-{
-?>
-											Total Doctors :<?php echo htmlentities($num_rows1);  } ?>		
-												</a>
+											
+											</div>
+										</div>
+									<div class="col-lg-12 col-md-12">
+											<div class="panel panel-white">
 												
-											</p>
+												
+											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-terminal fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle"> Appointments</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="book-appointment.php">
-													<a href="appointment-history.php">
-												<?php $sql= mysqli_query($con,"SELECT * FROM appointment");
-$num_rows2 = mysqli_num_rows($sql);
-{
-?>
-											Total Appointments :<?php echo htmlentities($num_rows2);  } ?>	
-												</a>
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="ti-files fa-1x text-primary"></i> <i class="fa fa-terminal fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle"> News</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="book-appointment.php">
-													<a href="manage-post.php">
-												<?php 
-$sql= mysqli_query($con,"SELECT * FROM post ");
-$num_rows22 = mysqli_num_rows($sql);
-?>
-											Total News :<?php echo htmlentities($num_rows22);   ?>	
-												</a>
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-
-
-
-
 							</div>
 						</div>
+						<!-- end: BASIC EXAMPLE -->
 			
 					
 					
@@ -158,7 +153,7 @@ $num_rows22 = mysqli_num_rows($sql);
 		
 			<!-- start: SETTINGS -->
 	<?php include('include/setting.php');?>
-			<>
+			
 			<!-- end: SETTINGS -->
 		</div>
 		<!-- start: MAIN JAVASCRIPTS -->
@@ -181,6 +176,12 @@ $num_rows22 = mysqli_num_rows($sql);
 		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 		<!-- start: CLIP-TWO JAVASCRIPTS -->
 		<script src="assets/js/main.js"></script>
+		
+		<script>
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('content-body');
+        </script>
 		<!-- start: JavaScript Event Handlers for this page -->
 		<script src="assets/js/form-elements.js"></script>
 		<script>

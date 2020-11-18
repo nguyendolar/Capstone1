@@ -13,6 +13,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 <?php
 if (isset($_POST['submit'])) {
 //variables
+$password = $_POST['password'];
 $patientFirstName = $_POST['patientFirstName'];
 $patientLastName = $_POST['patientLastName'];
 $patientMaritialStatus = $_POST['patientMaritialStatus'];
@@ -23,7 +24,7 @@ $patientPhone = $_POST['patientPhone'];
 $patientEmail = $_POST['patientEmail'];
 $patientId = $_POST['patientId'];
 // mysqli_query("UPDATE blogEntry SET content = $udcontent, title = $udtitle WHERE id = $id");
-$res=mysqli_query($con,"UPDATE patient SET patientFirstName='$patientFirstName', patientLastName='$patientLastName', patientMaritialStatus='$patientMaritialStatus', patientDOB='$patientDOB', patientGender='$patientGender', patientAddress='$patientAddress', patientPhone=$patientPhone, patientEmail='$patientEmail' WHERE icPatient=".$_SESSION['patientSession']);
+$res=mysqli_query($con,"UPDATE patient SET password='$password' , patientFirstName='$patientFirstName', patientLastName='$patientLastName', patientMaritialStatus='$patientMaritialStatus', patientDOB='$patientDOB', patientGender='$patientGender', patientAddress='$patientAddress', patientPhone=$patientPhone, patientEmail='$patientEmail' WHERE icPatient=".$_SESSION['patientSession']);
 // $userRow=mysqli_fetch_array($res);
 header( 'Location: profile.php' ) ;
 }
@@ -123,6 +124,55 @@ $widowed = "checked";
 			</div>
 		</nav>
 		<!-- navigation -->
+		<div class="modal fade" id="myDoctors" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- modal content -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Doctors</h4>
+                    </div>
+                    <!-- modal body start -->
+                    <div class="modal-bodyN">
+                    
+                        <!-- form start -->
+                        <div class="container" id="wrap">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                    <?php
+                                        $do="SELECT a.*,b.* FROM doctor a,specialist b where a.doctorSpecialist=b.id order by icDoctor desc ";
+                                         $thuchien= mysqli_query($con,$do);
+    
+                                    ?>
+                                    <?php while($rowss=mysqli_fetch_assoc($thuchien)) {?>
+                                        <div class="modal-body">
+                                            <p>
+                                                <div class="row">
+                                                <div class="col-md-4">
+                                                <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
+                                                <?php echo "<img src='../doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
+                                                </div>
+                                                <div class="col-md-5">
+                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorFirstName']; ?> <?php echo $rowss['doctorLastName']; ?></a>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Specialize :</b><?php echo $rowss['name']?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Phone :</b><?php echo $rowss['doctorPhone']?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Email:</b><?php echo $rowss['doctorEmail'] ?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Address :</b><?php echo $rowss['doctorAddress']?></h4></div></div>
+                                            </p>
+                                            
+                                        </div>
+                                    <?php } ?>  
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div class="modal fade" id="myIntro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -236,11 +286,6 @@ $widowed = "checked";
 								<img src="assets/img/1.jpg" class="img-responsive" />
 								<div class="description">
 									<h4><?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?></h4>
-									<h5> <strong> Website Designer </strong></h5>
-									<p>
-										Pellentesque elementum dapibus convallis.
-									</p>
-									<hr />
 									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
 								</div>
 							</div>
@@ -248,7 +293,7 @@ $widowed = "checked";
 						
 						<div class="col-md-9 col-sm-9  user-wrapper">
 							<div class="description">
-								<h3> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?> </h3>
+								<h3> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?> 's Profile </h3>
 								<hr />
 								
 								<div class="panel panel-default">
@@ -258,31 +303,38 @@ $widowed = "checked";
 										<table class="table table-user-information" align="center">
 											<tbody>
 												
-												
+											<tr>
+													<td>IC</td>
+													<td><?php echo $userRow['icPatient']; ?></td>
+												</tr>
 												<tr>
-													<td>PatientMaritialStatus</td>
+													<td>Password</td>
+													<td><?php echo $userRow['password']; ?></td>
+												</tr>
+												<tr>
+													<td>MaritialStatus</td>
 													<td><?php echo $userRow['patientMaritialStatus']; ?></td>
 												</tr>
 												<tr>
-													<td>PatientDOB</td>
+													<td>DOB</td>
 													<td><?php echo $userRow['patientDOB']; ?></td>
 												</tr>
 												<tr>
-													<td>PatientGender</td>
+													<td>Gender</td>
 													<td><?php echo $userRow['patientGender']; ?></td>
 												</tr>
 												<tr>
-													<td>PatientAddress</td>
+													<td>Address</td>
 													<td><?php echo $userRow['patientAddress']; ?>
 													</td>
 												</tr>
 												<tr>
-													<td>PatientPhone</td>
+													<td>Phone</td>
 													<td><?php echo $userRow['patientPhone']; ?>
 													</td>
 												</tr>
 												<tr>
-													<td>PatientEmail</td>
+													<td>Email</td>
 													<td><?php echo $userRow['patientEmail']; ?>
 													</td>
 												</tr>
@@ -307,7 +359,7 @@ $widowed = "checked";
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+										<h4 class="modal-title" id="myModalLabel">Update</h4>
 									</div>
 									<div class="modal-body">
 										<!-- form start -->
@@ -317,6 +369,10 @@ $widowed = "checked";
 													<tr>
 														<td>IC Number:</td>
 														<td><?php echo $userRow['icPatient']; ?></td>
+													</tr>
+													<tr>
+														<td>Password:</td>
+														<td><input type="text" class="form-control" name="password" value="<?php echo $userRow['password']; ?>"  /></td>
 													</tr>
 													<tr>
 														<td>First Name:</td>

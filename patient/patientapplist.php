@@ -58,7 +58,7 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
                         <li><a href="#" data-toggle="modal" data-target="#myModal">News</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myDoctors">Doctors</a></li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li>
 									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -77,6 +77,55 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
 			</div>
 		</nav>
 		<!-- navigation -->
+        <div class="modal fade" id="myDoctors" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- modal content -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Doctors</h4>
+                    </div>
+                    <!-- modal body start -->
+                    <div class="modal-bodyN">
+                    
+                        <!-- form start -->
+                        <div class="container" id="wrap">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                    <?php
+                                        $do="SELECT a.*,b.* FROM doctor a,specialist b where a.doctorSpecialist=b.id order by icDoctor desc ";
+                                         $thuchien= mysqli_query($con,$do);
+    
+                                    ?>
+                                    <?php while($rowss=mysqli_fetch_assoc($thuchien)) {?>
+                                        <div class="modal-body">
+                                            <p>
+                                                <div class="row">
+                                                <div class="col-md-4">
+                                                <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
+                                                <?php echo "<img src='../doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
+                                                </div>
+                                                <div class="col-md-5">
+                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorFirstName']; ?> <?php echo $rowss['doctorLastName']; ?></a>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Specialize :</b><?php echo $rowss['name']?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Phone :</b><?php echo $rowss['doctorPhone']?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Email:</b><?php echo $rowss['doctorEmail'] ?></h4>
+                                                <h4 style="color:#202020; font-family:'typo' ;font-size:18px" class="title1"><b>Address :</b><?php echo $rowss['doctorAddress']?></h4></div></div>
+                                            </p>
+                                            
+                                        </div>
+                                    <?php } ?>  
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div class="modal fade" id="myIntro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

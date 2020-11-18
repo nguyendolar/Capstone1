@@ -13,7 +13,7 @@ $res = mysqli_query($con,"SELECT a.*, b.* FROM doctorschedule a INNER JOIN patie
 WHERE a.scheduleDate='$appdate' AND scheduleId=$appid AND b.icPatient=$session");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 $icdoctor = $userRow['icDoctor'];
-$bacsi= mysqli_query($con,"SELECT * FROM doctor where icDoctor=$icdoctor");
+$bacsi= mysqli_query($con,"SELECT a.*,b.* FROM doctor a,specialist b where a.icDoctor=$icdoctor AND a.doctorSpecialist=b.id");
 
 $bs=mysqli_fetch_array($bacsi,MYSQLI_ASSOC);
 
@@ -123,6 +123,170 @@ header("Location: patient/patient.php");
 				</div>
 			</div>
 		</nav>
+		<?php
+$male="";
+$female="";
+if ($userRow['patientGender']=='male') {
+$male = "checked";
+}elseif ($userRow['patientGender']=='female') {
+$female = "checked";
+}
+$single="";
+$married="";
+$separated="";
+$divorced="";
+$widowed="";
+if ($userRow['patientMaritialStatus']=='single') {
+$single = "checked";
+}elseif ($userRow['patientMaritialStatus']=='married') {
+$married = "checked";
+}elseif ($userRow['patientMaritialStatus']=='separated') {
+$separated = "checked";
+}elseif ($userRow['patientMaritialStatus']=='divorced') {
+$divorced = "checked";
+}elseif ($userRow['patientMaritialStatus']=='widowed') {
+$widowed = "checked";
+}
+?>
+<?php
+if (isset($_POST['submit'])) {
+//variables
+$password = $_POST['password'];
+$patientFirstName = $_POST['patientFirstName'];
+$patientLastName = $_POST['patientLastName'];
+$patientMaritialStatus = $_POST['patientMaritialStatus'];
+$patientDOB = $_POST['patientDOB'];
+$patientGender = $_POST['patientGender'];
+$patientAddress = $_POST['patientAddress'];
+$patientPhone = $_POST['patientPhone'];
+$patientEmail = $_POST['patientEmail'];
+
+// mysqli_query("UPDATE blogEntry SET content = $udcontent, title = $udtitle WHERE id = $id");
+$res=mysqli_query($con,"UPDATE patient SET password='$password' , patientFirstName='$patientFirstName', patientLastName='$patientLastName', patientMaritialStatus='$patientMaritialStatus', patientDOB='$patientDOB', patientGender='$patientGender', patientAddress='$patientAddress', patientPhone=$patientPhone, patientEmail='$patientEmail' WHERE icPatient=".$_SESSION['patientSession']);
+// $userRow=mysqli_fetch_array($res);
+
+}
+?>
+		<div class="col-md-4">
+						
+						<!-- Large modal -->
+						
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">Update</h4>
+									</div>
+									<div class="modal-body">
+										<!-- form start -->
+										<form action="<?php $_PHP_SELF ?>" method="post" >
+											<table class="table table-user-information">
+												<tbody>
+													<tr>
+														<td>IC Number:</td>
+														<td><?php echo $userRow['icPatient']; ?></td>
+													</tr>
+													<tr>
+														<td>Password:</td>
+														<td><input type="text" class="form-control" name="password" value="<?php echo $userRow['password']; ?>"  /></td>
+													</tr>
+													<tr>
+														<td>First Name:</td>
+														<td><input type="text" class="form-control" name="patientFirstName" value="<?php echo $userRow['patientFirstName']; ?>"  /></td>
+													</tr>
+													<tr>
+														<td>Last Name</td>
+														<td><input type="text" class="form-control" name="patientLastName" value="<?php echo $userRow['patientLastName']; ?>"  /></td>
+													</tr>
+													
+													<!-- radio button -->
+													<tr>
+														<td>Maritial Status:</td>
+														<td>
+															<div class="radio">
+																<label><input type="radio" name="patientMaritialStatus" value="single" <?php echo $single; ?>>Single</label>
+															</div>
+															<div class="radio">
+																<label><input type="radio" name="patientMaritialStatus" value="married" <?php echo $married; ?>>Married</label>
+															</div>
+															<div class="radio">
+																<label><input type="radio" name="patientMaritialStatus" value="separated" <?php echo $separated; ?>>Separated</label>
+															</div>
+															<div class="radio">
+																<label><input type="radio" name="patientMaritialStatus" value="divorced" <?php echo $divorced; ?>>Divorced</label>
+															</div>
+															<div class="radio">
+																<label><input type="radio" name="patientMaritialStatus" value="widowed" <?php echo $widowed; ?>>Widowed</label>
+															</div>
+														</td>
+													</tr>
+													<!-- radio button end -->
+													<tr>
+														<td>DOB</td>
+														<!-- <td><input type="text" class="form-control" name="patientDOB" value="<?php echo $userRow['patientDOB']; ?>"  /></td> -->
+														<td>
+															<div class="form-group ">
+																
+																<div class="input-group">
+																	<div class="input-group-addon">
+																		<i class="fa fa-calendar">
+																		</i>
+																	</div>
+																	<input class="form-control" id="patientDOB" name="patientDOB" placeholder="MM/DD/YYYY" type="text" value="<?php echo $userRow['patientDOB']; ?>"/>
+																</div>
+															</div>
+														</td>
+														
+													</tr>
+													<!-- radio button -->
+													<tr>
+														<td>Gender</td>
+														<td>
+															<div class="radio">
+																<label><input type="radio" name="patientGender" value="male" <?php echo $male; ?>>Male</label>
+															</div>
+															<div class="radio">
+																<label><input type="radio" name="patientGender" value="female" <?php echo $female; ?>>Female</label>
+															</div>
+														</td>
+													</tr>
+													<!-- radio button end -->
+													
+													<tr>
+														<td>Phone number</td>
+														<td><input type="text" class="form-control" name="patientPhone" value="<?php echo $userRow['patientPhone']; ?>"  /></td>
+													</tr>
+													<tr>
+														<td>Email</td>
+														<td><input type="text" class="form-control" name="patientEmail" value="<?php echo $userRow['patientEmail']; ?>"  /></td>
+													</tr>
+													<tr>
+														<td>Address</td>
+														<td><textarea class="form-control" name="patientAddress"  ><?php echo $userRow['patientAddress']; ?></textarea></td>
+													</tr>
+													<tr>
+														<td>
+															<input type="submit" name="submit" class="btn btn-info" value="Update Info"></td>
+														</tr>
+													</tbody>
+													
+												</table>
+												
+												
+												
+											</form>
+											<!-- form end -->
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							<br /><br/>
+						</div>
+						
+					</div>
 		<!-- navigation -->
 		<div class="container">
 			<section style="padding-bottom: 50px; padding-top: 50px;">
@@ -136,11 +300,6 @@ header("Location: patient/patient.php");
 								<img src="assets/img/1.jpg" class="img-responsive" />
 								<div class="description">
 									<h4><?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?></h4>
-									<h5> <strong> Website Designer </strong></h5>
-									<p>
-										Pellentesque elementum dapibus convallis.
-									</p>
-									<hr />
 									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
 								</div>
 							</div>
@@ -169,6 +328,7 @@ header("Location: patient/patient.php");
 												<div class="panel-heading">Appointment Information</div>
 												<div class="panel-body">
 													Doctor: <?php echo $bs['doctorFirstName'] ?> <?php echo $bs['doctorLastName'] ?><br>
+													Specialize: <?php echo $bs['name'] ?><br>
 													Date: <?php echo $userRow['scheduleDate'] ?><br>
 													Time: <?php echo $userRow['startTime'] ?> - <?php echo $userRow['endTime'] ?><br>
 												</div>

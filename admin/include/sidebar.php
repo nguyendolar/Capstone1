@@ -101,19 +101,23 @@
 											<i class="ti-files"></i>
 										</div>
 										<div class="item-inner">
-											<span class="title"> Reports </span><i class="icon-arrow"></i>
+											<span class="title"> News </span><i class="icon-arrow"></i>
 										</div>
 									</div>
 								</a>
 								<ul class="sub-menu">
 									
 									<li>
-										<a href="between-dates-reports.php">
-											<span class="title">B/w dates reports </span>
+										<a href="post.php">
+											<span class="title">Add News</span>
 										</a>
 									</li>
 
-									
+									<li>
+										<a href="manage-post.php">
+											<span class="title">Manage News</span>
+										</a>
+									</li>
 									
 								</ul>
 								<li>

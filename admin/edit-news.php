@@ -4,12 +4,21 @@ error_reporting(0);
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
+$id=intval($_GET['id']);// get doctor id 
+if(isset($_POST["submit"])){
+	$title = $_POST['txtTitle'];
+	$body = $_POST['txtBody'];
+	$image = $_FILES['image']['name'];
+	$target = "../assets/img/".basename($image);
+	$res=mysqli_query($con,"UPDATE post SET postTitle='$title', postBody='$body', postImg='$image' WHERE postID='$id'");
+	header("Location: manage-post.php");
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>B/w dates reports | Admin</title>
+		<title>Update News | Admin</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -25,7 +34,7 @@ check_login();
 		<link rel="stylesheet" href="assets/css/styles.css">
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-
+		<script src="../resources/ckeditor/ckeditor.js"></script>
 
 	</head>
 	<body>
@@ -42,16 +51,9 @@ check_login();
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Between Dates | Reports</h1>
+									<h1 class="mainTitle">Update News</h1>
 																	</div>
-								<ol class="breadcrumb">
-									<li>
-										<span>Between Dates</span>
-									</li>
-									<li class="active">
-										<span>Reports</span>
-									</li>
-								</ol>
+								
 							</div>
 						</section>
 						<!-- end: PAGE TITLE -->
@@ -64,31 +66,41 @@ check_login();
 										<div class="col-lg-8 col-md-12">
 											<div class="panel panel-white">
 												<div class="panel-heading">
-													<h5 class="panel-title">Between Dates Reports</h5>
+													<h5 class="panel-title">Update News</h5>
 												</div>
 												<div class="panel-body">
-									
-													<form role="form" method="post" action="betweendates-detailsreports.php">
+													<?php 
+													$quey=mysqli_query($con,"select * from post where postID='$id'");
+													$p=mysqli_fetch_array($quey);
+													?>
+													<form role="form" method="post"  enctype="multipart/form-data">
 														<div class="form-group">
 															<label for="exampleInputPassword1">
-																 From Date:
+																 Title : 
 															</label>
-					<input type="date" class="form-control" name="fromdate" id="fromdate" value="" required='true'>
+															<input type="text" name="txtTitle"  class="text-input" value="<?php echo htmlentities($p['postTitle']);?>">
 														</div>
-		
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																 Image : 
+															</label>
+															<input type="hidden" name="size" value="1000000"> 
+        													<input type="file" name="image" > 
+														</div>
 													<div class="form-group">
 															<label for="exampleInputPassword1">
-																 To Date::
+																 Body :
 															</label>
-					 <input type="date" class="form-control" name="todate" id="todate" value="" required='true'>
+															<textarea class="text-input" name="txtBody"  id="content-body"><?php echo htmlentities($p['postBody']);?></textarea>
 
 														</div>	
 														
 														
 														<button type="submit" name="submit" id="submit" class="btn btn-o btn-primary">
-															Submit
+															Update
 														</button>
 													</form>
+													
 												</div>
 											</div>
 										</div>
@@ -146,6 +158,12 @@ check_login();
 		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 		<!-- start: CLIP-TWO JAVASCRIPTS -->
 		<script src="assets/js/main.js"></script>
+		
+		<script>
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('content-body');
+        </script>
 		<!-- start: JavaScript Event Handlers for this page -->
 		<script src="assets/js/form-elements.js"></script>
 		<script>

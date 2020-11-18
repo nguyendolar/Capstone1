@@ -4,18 +4,17 @@ error_reporting(0);
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
-
 if(isset($_GET['del']))
 		  {
-		          mysqli_query($con,"delete from patien where id = '".$_GET['id']."'");
+		          mysqli_query($con,"delete from post where postID = '".$_GET['id']."'");
                   $_SESSION['msg']="data deleted !!";
 		  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Admin | Manage Users</title>
-		
+		<title>Admin | Manage News</title>
+	
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
@@ -37,7 +36,7 @@ if(isset($_GET['del']))
 			<div class="app-content">
 				
 						<?php include('include/header.php');?>
-						
+					
 				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >
 					<div class="wrap-content container" id="container">
@@ -45,14 +44,14 @@ if(isset($_GET['del']))
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Admin | Manage Users</h1>
+									<h1 class="mainTitle">Admin | Manage News</h1>
 																	</div>
 								<ol class="breadcrumb">
 									<li>
 										<span>Admin</span>
 									</li>
 									<li class="active">
-										<span>Manage Users</span>
+										<span>Manage News</span>
 									</li>
 								</ol>
 							</div>
@@ -60,31 +59,29 @@ if(isset($_GET['del']))
 						<!-- end: PAGE TITLE -->
 						<!-- start: BASIC EXAMPLE -->
 						<div class="container-fluid container-fullw bg-white">
-						
+							
+									
+									
+												
 
-									<div class="row">
+								<div class="row">
 								<div class="col-md-12">
-									<h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Users</span></h5>
-									<p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?>
-								<?php echo htmlentities($_SESSION['msg']="");?></p>	
+									<h5 class="over-title margin-bottom-15">Manage <span class="text-bold"> News</span></h5>
+									
 									<table class="table table-hover" id="sample-table-1">
 										<thead>
 											<tr>
 												<th class="center">#</th>
-												<th>Full Name</th>
-												<th class="hidden-xs">Adress</th>
-												<th>City</th>
-												<th>Gender </th>
-												<th>Email </th>
-												<th>Creation Date </th>
-												<th>Updation Date </th>
+												<th>Title</th>
+												<th>Body</th>
+												<th>Image</th>
 												<th>Action</th>
 												
 											</tr>
 										</thead>
 										<tbody>
 <?php
-$sql=mysqli_query($con,"select * from users");
+$sql=mysqli_query($con,"select * from post order by postID desc");
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
 {
@@ -92,20 +89,15 @@ while($row=mysqli_fetch_array($sql))
 
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
-												<td class="hidden-xs"><?php echo $row['fullName'];?></td>
-												<td><?php echo $row['address'];?></td>
-												<td><?php echo $row['city'];?>
-												</td>
-												<td><?php echo $row['gender'];?></td>
-												<td><?php echo $row['email'];?></td>
-												<td><?php echo $row['regDate'];?></td>
-												<td><?php echo $row['updationDate'];?>
-												</td>
+												<td class="hidden-xs"><?php echo $row['postTitle'];?></td>
+												<td class="hidden-xs"><?php echo $row['postBody'];?></td>
+												<td class="hidden-xs"><?php echo "<img src='../assets/img/".$row['postImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?></td>
+												
 												<td >
 												<div class="visible-md visible-lg hidden-sm hidden-xs">
-							
+							<a href="edit-news.php?id=<?php echo $row['postID'];?>" class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Edit"><i class="fa fa-pencil"></i></a>
 													
-	<a href="manage-users.php?id=<?php echo $row['id']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
+	<a href="manage-post.php?id=<?php echo $row['postID']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
 												</div>
 												<div class="visible-xs visible-sm hidden-md hidden-lg">
 													<div class="btn-group" dropdown is-open="status.isopen">

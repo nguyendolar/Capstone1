@@ -13,6 +13,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 if (isset($_POST['submit'])) {
 //variables
+$password = $_POST['password'];
 $doctorFirstName = $_POST['doctorFirstName'];
 $doctorLastName = $_POST['doctorLastName'];
 $doctorPhone = $_POST['doctorPhone'];
@@ -21,7 +22,7 @@ $doctorAddress = $_POST['doctorAddress'];
 $doctorSocial = $_POST['doctorSocial'];
 $image = $_FILES['image']['name'];
 $target = "assets/img/".basename($image);
-$res=mysqli_query($con,"UPDATE doctor SET doctorFirstName='$doctorFirstName', doctorLastName='$doctorLastName', doctorPhone='$doctorPhone', doctorEmail='$doctorEmail', doctorAddress='$doctorAddress', doctorImg='$image', doctorSocial='$doctorSocial' WHERE doctorId=".$_SESSION['doctorSession']);
+$res=mysqli_query($con,"UPDATE doctor SET password='$password' , doctorFirstName='$doctorFirstName', doctorLastName='$doctorLastName', doctorPhone='$doctorPhone', doctorEmail='$doctorEmail', doctorAddress='$doctorAddress', doctorImg='$image', doctorSocial='$doctorSocial' WHERE doctorId=".$_SESSION['doctorSession']);
 // $userRow=mysqli_fetch_array($res);
 if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
     echo '<script language="javascript">alert("Đã upload thành công!");</script>';
@@ -176,8 +177,8 @@ header( 'Location: doctorprofile.php' ) ;
                                                     <td><?php echo $userRow['doctorId']; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>IC Number</td>
-                                                    <td><?php echo $userRow['icDoctor']; ?></td>
+                                                    <td>Password</td>
+                                                    <td><?php echo $userRow['password']; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Address</td>
@@ -231,8 +232,12 @@ header( 'Location: doctorprofile.php' ) ;
                                             <table class="table table-user-information">
                                                 <tbody>
                                                     <tr>
-                                                        <td>IC Number:</td>
-                                                        <td><?php echo $userRow['icDoctor']; ?></td>
+                                                        <td>ID:</td>
+                                                        <td><?php echo $userRow['doctorId']; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Password:</td>
+                                                        <td><input type="text" class="form-control" name="password" value="<?php echo $userRow['password']; ?>"  /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>First Name:</td>
@@ -266,7 +271,7 @@ header( 'Location: doctorprofile.php' ) ;
                                                     <tr>
                                                         <td>
                                                         <input type="hidden" name="size" value="1000000"> 
-                                                        <input type="file" name="image"> 
+                                                        <input type="file" name="image" > 
                                                         </tr>
                                                     <tr>
                                                         <td>
