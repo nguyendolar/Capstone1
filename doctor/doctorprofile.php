@@ -7,7 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM doctor WHERE username='$usersession'");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
@@ -22,7 +22,7 @@ $doctorAddress = $_POST['doctorAddress'];
 $doctorSocial = $_POST['doctorSocial'];
 $image = $_FILES['image']['name'];
 $target = "assets/img/".basename($image);
-$res=mysqli_query($con,"UPDATE doctor SET password='$password' , doctorFirstName='$doctorFirstName', doctorLastName='$doctorLastName', doctorPhone='$doctorPhone', doctorEmail='$doctorEmail', doctorAddress='$doctorAddress', doctorImg='$image', doctorSocial='$doctorSocial' WHERE doctorId=".$_SESSION['doctorSession']);
+$res=mysqli_query($con,"UPDATE doctor SET password='$password' , doctorFirstName='$doctorFirstName', doctorLastName='$doctorLastName', doctorPhone='$doctorPhone', doctorEmail='$doctorEmail', doctorAddress='$doctorAddress', doctorImg='$image', doctorSocial='$doctorSocial' WHERE username='$usersession'");
 // $userRow=mysqli_fetch_array($res);
 if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
     echo '<script language="javascript">alert("Đã upload thành công!");</script>';
@@ -173,8 +173,8 @@ header( 'Location: doctorprofile.php' ) ;
                                                 
                                                 
                                                 <tr>
-                                                    <td>Doctor ID</td>
-                                                    <td><?php echo $userRow['doctorId']; ?></td>
+                                                    <td>Username</td>
+                                                    <td><?php echo $userRow['username']; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Password</td>
@@ -232,8 +232,8 @@ header( 'Location: doctorprofile.php' ) ;
                                             <table class="table table-user-information">
                                                 <tbody>
                                                     <tr>
-                                                        <td>ID:</td>
-                                                        <td><?php echo $userRow['doctorId']; ?></td>
+                                                        <td>Username:</td>
+                                                        <td><?php echo $userRow['username']; ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Password:</td>

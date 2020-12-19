@@ -83,7 +83,7 @@ exit();
 									Login <i class="fa fa-arrow-circle-right"></i>
 								</button>
 							</div>
-							
+							<a href="../index.php">Home Page</a>
 						</fieldset>
 					</form>
 

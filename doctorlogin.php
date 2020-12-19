@@ -7,16 +7,16 @@ header("Location: doctor/doctordashboard.php");
 }
 if (isset($_POST['login']))
 {
-$doctorId = mysqli_real_escape_string($con,$_POST['doctorId']);
+$username = mysqli_real_escape_string($con,$_POST['username']);
 $password  = mysqli_real_escape_string($con,$_POST['password']);
-
-$res = mysqli_query($con,"SELECT * FROM doctor WHERE doctorId = '$doctorId'");
+$pwd = md5($password);
+$res = mysqli_query($con,"SELECT * FROM doctor WHERE username = '$username'");
 
 $row=mysqli_fetch_array($res,MYSQLI_ASSOC);
 // echo $row['password'];
-if ($row['password'] == $password)
+if ($row['password'] == $pwd)
 {
-$_SESSION['doctorSession'] = $row['doctorId'];
+$_SESSION['doctorSession'] = $row['username'];
 $_SESSION['doctorIC'] = $row['icDoctor'];
 ?>
 <script type="text/javascript">
@@ -53,9 +53,11 @@ header("Location: doctor/doctordashboard.php");
                     <div class="avatar"></div>
                     <div class="form-box">
                         <form class="form" role="form" method="POST" accept-charset="UTF-8">
-                            <input name="doctorId" type="text" placeholder="Doctor ID" required>
+                            <input name="username" type="text" placeholder="Username" required>
                             <input name="password" type="password" placeholder="Password" required>
                             <button class="btn btn-info btn-block login" type="submit" name="login">Login</button>
+                            <br>
+                            <a href="index.php">Home Page</a>
                         </form>
                     </div>
                 </div>

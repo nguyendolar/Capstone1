@@ -58,17 +58,12 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<ul class="nav navbar-nav">
-							
-						</ul>
-					</ul>
+					
 					
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="patient.php" data-toggle="modal" data-target="">Home</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myIntro">About us</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#mySer">Service</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#myModal">News</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myNew">News</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myDoctors">Doctors</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
@@ -139,49 +134,47 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                 </div>
             </div>
         </div>
-		<div class="modal fade" id="mySer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		
+		<div class="modal fade" id="myNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <!-- modal content -->
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="modal-title">Service</h3>
+                        <h4 class="modal-title">News</h4>
                     </div>
                     <!-- modal body start -->
-                    <div class="modal-body">
-                        
+                    <div class="modal-bodyN">
                         <!-- form start -->
                         <div class="container" id="wrap">
                             <div class="row">
                                 <div class="col-md-6">
                                     
                                     <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                    <?php
+                                        $s="SELECT * FROM post ORDER BY  postID DESC ";
+                                         $thuchiens= mysqli_query($con,$s);
                                         
-                                                <h4><u><i>Medical examination and treatment on request</i></u></h4>
+                                    ?>
+                                    <?php while($posts=mysqli_fetch_assoc($thuchiens)) {
+                                            
+                                        ?>
+                                        <div class="modal-body">
+                                            <p>
+                                                <div class="row">
                                                 <div class="col-md-4">
-                                                
-                                                <img src="assets/img/yc.png" width=160 height=150 alt="Sunny Prakash Tiwari" class="img-rounded">
+                                                <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
+                                                <?php echo "<img src='../assets/img/".$posts['postImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
                                                 </div>
                                                 
-						    	                <p>In addition to receiving medical examination and treatment with a health insurance card provided by the Social Insurance agency</p>
-                                                <p>The hospital also examines those who pay for their own expenses or have health cards of reputable insurance organizations such as: Liberty, Aon , Pico oil and gas insurance, Bao Viet insurance, BIC insurance ...</p>
+                                                <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $posts['postTitle']; ?> </a>
+                                                <h5><?php echo substr($posts['postBody'],0,200) . "........ <a href='#'>Read more</a>" ;?></h5>
                                                 
-                                                
-                                                <h4><u><i>Health insurance examination</i></u></h4>
-                                                <div class="col-md-4">
-                                                
-                                                <img src="assets/img/bh.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
-                                                </div>
-                                                <p>With the motto health care for the community is a top task. Viet Han polyclinic participates in medical examination and treatment for patients with health insurance.are harmful to health. </p>
-                                                <p>More than ever, you need to take care of and care more about the health of you and your loved ones</p>
-                                                <br>
-                                                <h4><u><i>Periodic health examination</i></u></h4>
-                                                <div class="col-md-4">
-                                                
-                                                <img src="assets/img/dk.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
-                                                </div>
-                                                <p>Busy life, stressful work together with an unreasonable living regime, erratic eating ... are harmful to health. More than ever, you need to take care of and care more about the health of you and your loved ones.</p>
-                                        
+                                                <h5 style="color:#202020; font-family:'typo' ;font-size:15px" class="title1"><b>Created at :</b><?php echo $posts['postCreate']?></h5></div>
+                                            </p>
+                                            
+                                        </div>
+                                    <?php } ?>  
                                     </form>
                                     
                                 </div>
@@ -340,7 +333,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="assets/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
-    $('#mySer').on('shown.bs.modal', function () {
+    $('#myNew').on('shown.bs.modal', function () {
     $('#myInput').focus()
     })
     $('#myIntro').on('shown.bs.modal', function () {

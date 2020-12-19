@@ -8,7 +8,7 @@ header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
 $icdoctor = $_SESSION['doctorIC'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM doctor WHERE username='$usersession'");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 // insert
 
@@ -161,7 +161,7 @@ alert('Added fail. Please try again.');
                              <div class="container-fluid">
                               <div class="row">
                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                <form class="form-horizontal" method="post">
+                                <form class="form-horizontal" method="post" name="myform" onsubmit="return validateform()">
                                  <div class="form-group form-group-lg">
                                   <label class="control-label col-sm-2 requiredField" for="date">
                                    Date
@@ -175,7 +175,9 @@ alert('Added fail. Please try again.');
                                      <i class="fa fa-calendar">
                                      </i>
                                     </div>
+                                    <span style="color : red;" id="dateloc"></span>
                                     <input class="form-control" id="date" name="date" type="text" required/>
+                                    
                                    </div>
                                   </div>
                                  </div>
@@ -194,7 +196,9 @@ alert('Added fail. Please try again.');
                                      <i class="fa fa-clock-o">
                                      </i>
                                     </div>
+                                    <span style="color : red;" id="startloc"></span>
                                     <input class="form-control" id="starttime" name="starttime" type="text" required/>
+                                    
                                    </div>
                                   </div>
                                  </div>
@@ -211,6 +215,7 @@ alert('Added fail. Please try again.');
                                      <i class="fa fa-clock-o">
                                      </i>
                                     </div>
+                                    <span style="color : red;" id="endloc"></span>
                                     <input class="form-control" id="endtime" name="endtime" type="text" required/>
                                    </div>
                                   </div>
@@ -412,6 +417,99 @@ return false;
                 });
             });
         </script>
-
+    <script>
+    
+    
+    
+    
+    function validateform() {
+        
+        var day = document.myform.date.value;
+        var date = new Date(day);
+        var now = new Date();
+        var stime = document.myform.starttime.value;
+        var hour = stime.slice(0,2);
+        var minu = stime.slice(3,5);
+        var time = new Date(2017,04,06,hour,minu);
+        var status = false;
+        if (date.getDate() < now.getDate() ) {
+            if(date.getMonth() <= now.getMonth()){
+                if(date.getFullYear() <= now.getFullYear()){
+                    document.getElementById("dateloc").innerHTML = " Please select current day or next day ";
+                    status = false;
+                }
+                else{
+                   status = true;
+                    
+                }
+            }
+            else{
+                if(date.getFullYear() < now.getFullYear()){
+                    document.getElementById("dateloc").innerHTML = " Please select current day or next day ";
+                    status = false;
+                }
+                else{
+                    status = true;
+                }
+            }
+            
+        }
+        else {
+            if(date.getMonth() < now.getMonth()){
+                if(date.getFullYear() <= now.getFullYear()){
+                    document.getElementById("dateloc").innerHTML = " Please select current day or next day ";
+                    status = false;
+                }
+                else{
+                   status =true;
+                }
+            }
+            else{
+                if(date.getFullYear() < now.getFullYear()){
+                    document.getElementById("dateloc").innerHTML = " Please select current day or next day ";
+                    status = false;
+                }
+                else{
+                    if(time.getHours() < now.getHours()){
+                            document.getElementById("startloc").innerHTML = " Please select current time or next time ";
+                             status = false;
+                    }else if(time.getHours() = now.getHours()){
+                            if(time.getMinutes() < now.getMinutes()){
+                                 document.getElementById("startloc").innerHTML = " Please select current time or next time ";
+                                    status = false;
+                            }
+                            else{
+                                status = true;
+                            }
+            
+                    }else if(time.getHours() > now.getHours()){
+                            status = true;
+                    }
+                }
+            }
+            
+        }
+        
+        return status;
+        /*var stime = document.myform.starttime.value;
+        var time = new Date(stime);
+        if(time.getHours() < now.getHours()){
+            document.getElementById("startloc").innerHTML = " Please select current time or next time ";
+            status = false;
+        }else if(time.getHours() = now.getHours()){
+                if(time.getMinutes() < now.getMinutes()){
+                    document.getElementById("startloc").innerHTML = " Please select current time or next time ";
+                    status = false;
+                }
+                else{
+                    status = true;
+                }
+            
+        }else if(time.getHours() > now.getHours()){
+                status = true ;
+        }
+        */
+    }
+</script>
     </body>
 </html>

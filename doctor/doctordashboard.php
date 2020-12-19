@@ -2,13 +2,13 @@
 session_start();
 include_once '../assets/conn/dbconnect.php';
 // include_once 'connection/server.php';
-if(!isset($_SESSION['doctorSession']))
+if(!isset($_SESSION['doctorIC']))
 {
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
 $icdoctor = $_SESSION['doctorIC']; 
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM doctor WHERE icDoctor=".$icdoctor);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
@@ -124,7 +124,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     <th><input type="text" class="form-control" placeholder="Comment" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Status" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Complete" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Delete" disabled></th>
+                                    
                                 </tr>
                             </thead>
                             
@@ -171,8 +171,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
                                     echo "<form method='POST'>";
                                     echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
-                                    echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
-                            </td>";
+                                   
                                
                             } 
                                 echo "</tr>";

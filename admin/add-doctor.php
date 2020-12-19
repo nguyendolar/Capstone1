@@ -13,9 +13,10 @@ $address=$_POST['address'];
 $phone=$_POST['phone'];
 $email=$_POST['docemail'];
 $dob=$_POST['DOB'];
-$id=$_POST['id'];
+$username=$_POST['username'];
 $password=$_POST['npass'];
-$sql=mysqli_query($con,"insert into doctor(password,doctorId,doctorFirstName,doctorLastName,doctorSpecialist,doctorAddress,doctorPhone,doctorEmail,doctorDOB) values('$password','$id','$docFname','$docLname','$docspecialization','$address','$phone','$email','$dob')");
+$pwd = md5($password);
+$sql=mysqli_query($con,"insert into doctor(password,username,doctorFirstName,doctorLastName,doctorSpecialist,doctorAddress,doctorPhone,doctorEmail,doctorDOB) values('$pwd','$username','$docFname','$docLname','$docspecialization','$address','$phone','$email','$dob')");
 if($sql)
 {
 echo "<script>alert('Doctor info added Successfully');</script>";
@@ -178,9 +179,9 @@ error:function (){}
 
 														<div class="form-group">
 									<label for="fess">
-																 Id Doctor
+																 Username
 															</label>
-					<input type="number" name="id" class="form-control"  placeholder="Enter Id Doctor" required="true">
+					<input type="text" name="username" class="form-control"  placeholder="Enter Username Doctor" required="true">
 														</div>														
 														<div class="form-group">
 															<label for="exampleInputPassword1">

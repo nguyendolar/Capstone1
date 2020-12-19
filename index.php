@@ -12,14 +12,15 @@ session_start();
 if (isset($_SESSION['patientSession']) != "") {
 header("Location: patient/patient.php");
 }
+
 if (isset($_POST['login']))
 {
-$icPatient = mysqli_real_escape_string($con,$_POST['icPatient']);
+$username = mysqli_real_escape_string($con,$_POST['username']);
 $password  = mysqli_real_escape_string($con,$_POST['password']);
-
-$res = mysqli_query($con,"SELECT * FROM patient WHERE icPatient = '$icPatient'");
+$pwd = md5($password);
+$res = mysqli_query($con,"SELECT * FROM patient WHERE username = '$username'");
 $row=mysqli_fetch_array($res,MYSQLI_ASSOC);
-if ($row['password'] == $password)
+if ($row['password'] == $pwd)
 {
 $_SESSION['patientSession'] = $row['icPatient'];
 ?>
@@ -43,16 +44,20 @@ if (isset($_POST['signup'])) {
 $patientFirstName = mysqli_real_escape_string($con,$_POST['patientFirstName']);
 $patientLastName  = mysqli_real_escape_string($con,$_POST['patientLastName']);
 $patientEmail     = mysqli_real_escape_string($con,$_POST['patientEmail']);
-$icPatient     = mysqli_real_escape_string($con,$_POST['icPatient']);
+$patientPhone     = mysqli_real_escape_string($con,$_POST['patientPhone']);
+$patienAddress     = mysqli_real_escape_string($con,$_POST['patientAddress']);
+$username        = mysqli_real_escape_string($con,$_POST['username']);
 $password         = mysqli_real_escape_string($con,$_POST['password']);
+$pwd=md5($password);
 $month            = mysqli_real_escape_string($con,$_POST['month']);
 $day              = mysqli_real_escape_string($con,$_POST['day']);
 $year             = mysqli_real_escape_string($con,$_POST['year']);
 $patientDOB       = $year . "-" . $month . "-" . $day;
 $patientGender = mysqli_real_escape_string($con,$_POST['patientGender']);
+
 //INSERT
-$query = " INSERT INTO patient (  icPatient, password, patientFirstName, patientLastName,  patientDOB, patientGender,   patientEmail )
-VALUES ( '$icPatient', '$password', '$patientFirstName', '$patientLastName', '$patientDOB', '$patientGender', '$patientEmail' ) ";
+$query = " INSERT INTO patient (  username, password, patientFirstName, patientLastName,  patientDOB, patientGender, patientAddress, patientPhone, patientEmail )
+VALUES ( '$username', '$pwd', '$patientFirstName', '$patientLastName', '$patientDOB', '$patientGender', '$patienAddress', '$patientPhone', '$patientEmail' ) ";
 $result = mysqli_query($con, $query);
 // echo $result;
 if( $result )
@@ -67,7 +72,7 @@ else
 {
 ?>
 <script type="text/javascript">
-alert('User already registered. Please try again');
+alert('IC Number already registered. Please try again');
 </script>
 <?php
 }
@@ -121,7 +126,6 @@ alert('User already registered. Please try again');
                         <!-- <li><a href="adminlogin.php">Admin</a></li> -->
                         <li><a href="index.php" data-toggle="modal" data-target="">Home</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myIntro">About us</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#mySer">Service</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myNews">News</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myDoctors">Doctors</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#myModal">Sign Up</a></li>
@@ -133,20 +137,37 @@ alert('User already registered. Please try again');
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            
-                                            <form class="form" role="form" method="POST" accept-charset="UTF-8" >
+                                        <?php
+        
+        if (!empty($_SESSION['patientSession'])) {
+            
+            header("Location: patient/patient.php");
+            
+        
+        } else {
+           
+            include './google_source.php';
+            ?>
+                                            <form class="form" action="./index.php" role="form" method="POST" accept-charset="UTF-8" autocomplete="off" >
                                                 <div class="form-group">
-                                                    <label class="sr-only" for="icPatient">Email</label>
-                                                    <input type="text" class="form-control" name="icPatient" placeholder="IC Number" required>
+                                                    <label>Username</label>
+                                                    <input type="text" class="form-control" name="username" placeholder="Enter your username"  required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="sr-only" for="password">Password</label>
-                                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                                    <label >Password</label>
+                                                    <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <button type="submit" name="login" id="login" class="btn btn-primary btn-block">Sign in</button>
                                                 </div>
                                             </form>
+                                            <div id="login-with-social">
+                    
+                                                <?php if(isset($authUrl)){ ?>
+                                                    <a href="<?= $authUrl ?>"><img src="./assets/img/google.png" alt='google login' title="Google Login" height="50" width="280" /></a>
+                                                 <?php } ?>
+                </div>
+                <?php } ?>
                                         </div>
                                     </div>
                                 </li>
@@ -175,8 +196,8 @@ alert('User already registered. Please try again');
                             <div class="row">
                                 <div class="col-md-6">
                                     
-                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
-                                        <h4>It's free and always will be.</h4>
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form" name="myform" onsubmit="return validateform()">
+                                        <br>
                                         <div class="row">
                                             <div class="col-xs-6 col-md-6">
                                                 <input type="text" name="patientFirstName" value="" class="form-control input-lg" placeholder="First Name" required />
@@ -185,13 +206,20 @@ alert('User already registered. Please try again');
                                                 <input type="text" name="patientLastName" value="" class="form-control input-lg" placeholder="Last Name" required />
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+                                            <input type="email" name="patientEmail" value="" class="form-control input-lg" placeholder="Your Email"  required/> 
+                                            </div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <input type="number" name="patientPhone" value="" class="form-control input-lg" placeholder="Your Phone" required />
+                                            </div>
+                                        </div>
+                                        <input type="text" name="patientAddress" value="" class="form-control input-lg" placeholder="Your Address"  required/>
+                                        <input type="text" name="username" value="" class="form-control input-lg" placeholder="Username"  required/>
                                         
-                                        <input type="text" name="patientEmail" value="" class="form-control input-lg" placeholder="Your Email"  required/>
-                                        <input type="number" name="icPatient" value="" class="form-control input-lg" placeholder="Your IC Number"  required/>
-                                        
-                                        
+                                        <span style="color : red;" id="ploc"></span>
                                         <input type="password" name="password" value="" class="form-control input-lg" placeholder="Password"  required/>
-                                        
+                                        <span style="color : red;" id="cloc"></span>
                                         <input type="password" name="confirm_password" value="" class="form-control input-lg" placeholder="Confirm Password"  required/>
                                         <label>Birth Date</label>
                                         <div class="row">
@@ -309,58 +337,7 @@ alert('User already registered. Please try again');
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="mySer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <!-- modal content -->
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="modal-title">Service</h3>
-                    </div>
-                    <!-- modal body start -->
-                    <div class="modal-body">
-                        
-                        <!-- form start -->
-                        <div class="container" id="wrap">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    
-                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
-                                        
-                                                <h4><u><i>Medical examination and treatment on request</i></u></h4>
-                                                <div class="col-md-4">
-                                                
-                                                <img src="assets/img/yc.png" width=160 height=150 alt="Sunny Prakash Tiwari" class="img-rounded">
-                                                </div>
-                                                
-						    	                <p>In addition to receiving medical examination and treatment with a health insurance card provided by the Social Insurance agency</p>
-                                                <p>The hospital also examines those who pay for their own expenses or have health cards of reputable insurance organizations such as: Liberty, Aon , Pico oil and gas insurance, Bao Viet insurance, BIC insurance ...</p>
-                                                
-                                                
-                                                <h4><u><i>Health insurance examination</i></u></h4>
-                                                <div class="col-md-4">
-                                                
-                                                <img src="assets/img/bh.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
-                                                </div>
-                                                <p>With the motto health care for the community is a top task. Viet Han polyclinic participates in medical examination and treatment for patients with health insurance.are harmful to health. </p>
-                                                <p>More than ever, you need to take care of and care more about the health of you and your loved ones</p>
-                                                <br>
-                                                <h4><u><i>Periodic health examination</i></u></h4>
-                                                <div class="col-md-4">
-                                                
-                                                <img src="assets/img/dk.png" width=160 height=160 alt="Sunny Prakash Tiwari" class="img-rounded">
-                                                </div>
-                                                <p>Busy life, stressful work together with an unreasonable living regime, erratic eating ... are harmful to health. More than ever, you need to take care of and care more about the health of you and your loved ones.</p>
-                                        
-                                    </form>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- intro -->
         <div class="modal fade" id="myIntro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -617,9 +594,7 @@ alert('User already registered. Please try again');
     $('#myIntro').on('shown.bs.modal', function () {
     $('#myInput').focus()
     })
-    $('#mySer').on('shown.bs.modal', function () {
-    $('#myInput').focus()
-    })
+    
     $('#myDoctors').on('shown.bs.modal', function () {
     $('#myInput').focus()
     })
@@ -643,6 +618,25 @@ alert('User already registered. Please try again');
     })
 
 </script>
+<script>
+    function validateform() {
+        
+        var password = document.myform.password.value;
+        var confirm_password = document.myform.confirm_password.value;
+ 
+        if (password.length < 6) {
+            document.getElementById("ploc").innerHTML = " Password must be at least 8 characters long";
+            return false;
+        }
+        if (password == confirm_password) {
+            return true;
+        } else {
+            document.getElementById("cloc").innerHTML = " Confrim password must be same!";
+            
+            return false;
+        }
+    }
+</script>
 
     <!-- date end -->
    <!--Start of Tawk.to Script-->
@@ -657,6 +651,7 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
+
 <!--End of Tawk.to Script-->
 </body>
 </html>

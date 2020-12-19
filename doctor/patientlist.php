@@ -8,7 +8,7 @@ header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
 $icdoctor = $_SESSION['doctorIC'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM doctor WHERE username='$usersession'");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
@@ -159,8 +159,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     echo "<td>" . $patientRow['appId'] . "</td>";
                                    
                                     echo "<form method='POST'>";
-                                    echo "<td class='text-center'><a href='#' id='".$patientRow['icPatient']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
-                            </td>";
+                                    
                                
                             } 
                                 echo "</tr>";
