@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 19, 2020 lúc 04:24 PM
+-- Thời gian đã tạo: Th12 20, 2020 lúc 07:57 AM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.2.31
 
@@ -48,19 +48,12 @@ INSERT INTO `admin` (`id`, `username`, `password`) VALUES
 
 CREATE TABLE `appointment` (
   `appId` int(3) NOT NULL,
-  `patientIc` bigint(12) NOT NULL,
+  `patientIc` int(11) NOT NULL,
   `scheduleId` int(10) NOT NULL,
   `appSymptom` varchar(100) NOT NULL,
   `appComment` varchar(100) NOT NULL,
   `status` varchar(10) NOT NULL DEFAULT 'process'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Đang đổ dữ liệu cho bảng `appointment`
---
-
-INSERT INTO `appointment` (`appId`, `patientIc`, `scheduleId`, `appSymptom`, `appComment`, `status`) VALUES
-(99, 1101999, 65, 'toi bi dau bung', 'dau di nhieu ngay', 'done');
 
 -- --------------------------------------------------------
 
@@ -69,9 +62,9 @@ INSERT INTO `appointment` (`appId`, `patientIc`, `scheduleId`, `appSymptom`, `ap
 --
 
 CREATE TABLE `doctor` (
-  `icDoctor` bigint(12) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `doctorId` int(3) NOT NULL,
+  `icDoctor` int(11) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `username` varchar(250) NOT NULL,
   `doctorFirstName` varchar(50) NOT NULL,
   `doctorLastName` varchar(50) NOT NULL,
   `doctorSpecialist` int(11) DEFAULT NULL,
@@ -87,8 +80,8 @@ CREATE TABLE `doctor` (
 -- Đang đổ dữ liệu cho bảng `doctor`
 --
 
-INSERT INTO `doctor` (`icDoctor`, `password`, `doctorId`, `doctorFirstName`, `doctorLastName`, `doctorSpecialist`, `doctorAddress`, `doctorPhone`, `doctorEmail`, `doctorDOB`, `doctorImg`, `doctorSocial`) VALUES
-(8, 'caonguyen', 1, 'Nguyen', 'Nguyen', 9, ' Quang Nam', '0394073759', 'nguyencaonguyencmu@gmail.com', '1999-01-10', 'a.jpg', 'https://www.facebook.com/nguyennguyenas/');
+INSERT INTO `doctor` (`icDoctor`, `password`, `username`, `doctorFirstName`, `doctorLastName`, `doctorSpecialist`, `doctorAddress`, `doctorPhone`, `doctorEmail`, `doctorDOB`, `doctorImg`, `doctorSocial`) VALUES
+(12, 'e9b654fb4686c0da0f12e9472a65c477', 'bacsi1', 'Nguyen', 'Nguyen Cao', 8, 'Da Nang', '0394073759', 'nguyencaonguyencmu@gmail.com', '2015-01-06', 'a.jpg', '');
 
 -- --------------------------------------------------------
 
@@ -98,7 +91,7 @@ INSERT INTO `doctor` (`icDoctor`, `password`, `doctorId`, `doctorFirstName`, `do
 
 CREATE TABLE `doctorschedule` (
   `scheduleId` int(11) NOT NULL,
-  `icDoctor` bigint(12) NOT NULL,
+  `icDoctor` int(11) NOT NULL,
   `scheduleDate` date NOT NULL,
   `startTime` time NOT NULL,
   `endTime` time NOT NULL,
@@ -110,7 +103,7 @@ CREATE TABLE `doctorschedule` (
 --
 
 INSERT INTO `doctorschedule` (`scheduleId`, `icDoctor`, `scheduleDate`, `startTime`, `endTime`, `bookAvail`) VALUES
-(65, 8, '2020-11-18', '14:15:00', '17:37:00', 'notavail');
+(120, 12, '2020-12-21', '22:55:00', '17:37:00', 'notavail');
 
 -- --------------------------------------------------------
 
@@ -119,24 +112,19 @@ INSERT INTO `doctorschedule` (`scheduleId`, `icDoctor`, `scheduleDate`, `startTi
 --
 
 CREATE TABLE `patient` (
-  `icPatient` bigint(12) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `patientFirstName` varchar(20) NOT NULL,
-  `patientLastName` varchar(20) NOT NULL,
+  `icPatient` int(11) NOT NULL,
+  `username` varchar(250) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `patientFirstName` varchar(250) NOT NULL,
+  `patientLastName` varchar(250) NOT NULL,
   `patientMaritialStatus` varchar(10) NOT NULL,
   `patientDOB` date NOT NULL,
   `patientGender` varchar(10) NOT NULL,
-  `patientAddress` varchar(100) NOT NULL,
+  `patientAddress` varchar(250) NOT NULL,
   `patientPhone` varchar(15) NOT NULL,
-  `patientEmail` varchar(100) NOT NULL
+  `patientEmail` varchar(100) NOT NULL,
+  `patientImg` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Đang đổ dữ liệu cho bảng `patient`
---
-
-INSERT INTO `patient` (`icPatient`, `password`, `patientFirstName`, `patientLastName`, `patientMaritialStatus`, `patientDOB`, `patientGender`, `patientAddress`, `patientPhone`, `patientEmail`) VALUES
-(1101999, 'nguyen', 'Cao', 'Nhan', 'single', '1993-08-17', 'male', 'Tam Ky, Quang Nam', '123456789', 'nguyencaonguyencmu@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -197,8 +185,8 @@ ALTER TABLE `admin`
 ALTER TABLE `appointment`
   ADD PRIMARY KEY (`appId`),
   ADD UNIQUE KEY `scheduleId_2` (`scheduleId`),
-  ADD KEY `patientIc` (`patientIc`),
-  ADD KEY `scheduleId` (`scheduleId`);
+  ADD KEY `scheduleId` (`scheduleId`),
+  ADD KEY `patientIc` (`patientIc`);
 
 --
 -- Chỉ mục cho bảng `doctor`
@@ -218,7 +206,7 @@ ALTER TABLE `doctorschedule`
 -- Chỉ mục cho bảng `patient`
 --
 ALTER TABLE `patient`
-  ADD PRIMARY KEY (`icPatient`);
+  ADD PRIMARY KEY (`icPatient`) USING BTREE;
 
 --
 -- Chỉ mục cho bảng `post`
@@ -246,19 +234,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `appId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT cho bảng `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `icDoctor` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `icDoctor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `doctorschedule`
 --
 ALTER TABLE `doctorschedule`
-  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+
+--
+-- AUTO_INCREMENT cho bảng `patient`
+--
+ALTER TABLE `patient`
+  MODIFY `icPatient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT cho bảng `post`
@@ -280,8 +274,8 @@ ALTER TABLE `specialist`
 -- Các ràng buộc cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-  ADD CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`patientIc`) REFERENCES `patient` (`icPatient`),
-  ADD CONSTRAINT `appointment_ibfk_5` FOREIGN KEY (`scheduleId`) REFERENCES `doctorschedule` (`scheduleId`);
+  ADD CONSTRAINT `appointment_ibfk_5` FOREIGN KEY (`scheduleId`) REFERENCES `doctorschedule` (`scheduleId`),
+  ADD CONSTRAINT `appointment_ibfk_6` FOREIGN KEY (`patientIc`) REFERENCES `patient` (`icPatient`);
 
 --
 -- Các ràng buộc cho bảng `doctor`

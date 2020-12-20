@@ -240,20 +240,20 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 					<div class="col-xs-12 col-md-8">
 						
 						
-						<?php if ($userRow['patientMaritialStatus']=="") {
+						<?php if ($userRow['patientMaritialStatus']=="" || $userRow['patientGender']=="" || $userRow['patientAddress']=="" || $userRow['patientPhone']=="") {
 						// <!-- / notification start -->
 						echo "<div class='row'>";
 							echo "<div class='col-lg-12'>";
 								echo "<div class='alert alert-danger alert-dismissable'>";
 									echo "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
 									echo " <i class='fa fa-info-circle'></i>  <strong>Please complete your profile.</strong>" ;
+									
 								echo "  </div>";
+								echo " <img src='https://lh3.googleusercontent.com/proxy/i8Yohv6jwy1XInaKDcULoTEpccAgQAq8Nppp94aWeRetOdDusQNrUE8Lcfcb8Qhl-BtoJcG6UOVS-K1sZdUmyScPY-vO7WvtFtc4LB07GIrP3oSAaAFXxrE5zQM9aNkOHjxgWcFBs3zCSZ26z4oGC2ApP0M2s73h5e-_oA' width=700px height=400px />" ;
 							echo "</div>";
 							// <!-- notification end -->
 							
-							} else {
-							}
-							?>
+							} else { ?>
 							<!-- notification end -->
 							<h2>Hai <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?>. Make appointment today!</h2>
 							<div class="input-group" style="margin-bottom:10px;">
@@ -292,6 +292,10 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 						}
 						</script>
 						
+							<?php
+							}
+							?>
+							
 						<!-- script start end -->
 						
 						<!-- table appointment start -->
