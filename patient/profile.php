@@ -34,7 +34,7 @@ if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
     echo '<script language="javascript">alert("Đã upload thất bại!");</script>';
     }
 header( 'Location: profile.php' ) ;
-
+$_SESSION['msg'] = "Update successfull!";
 
 
 }
@@ -98,7 +98,7 @@ $widowed = "checked";
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
+					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="../assets/img/lg.png" width= "100px" height="40px"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -285,7 +285,13 @@ $widowed = "checked";
 						<div class="col-md-3 col-sm-3">
 							
 							<div class="user-wrapper">
-								<?php echo "<img src='assets/img/".$userRow['patientImg']."' class='img-responsive' />"?>
+							<?php
+							if($userRow['patientImg']==""){
+								echo "<img src='../assets/img/avavs.jpg' class='img-responsive' />" ;
+							}
+							else{
+								 echo "<img src='assets/img/".$userRow['patientImg']."' class='img-responsive' />" ;
+							}?>
 								<div class="description">
 									<h4><?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?></h4>
 									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
@@ -295,6 +301,8 @@ $widowed = "checked";
 						
 						<div class="col-md-9 col-sm-9  user-wrapper">
 							<div class="description">
+							<?php if(isset($_SESSION['msg'])){ ?>
+                                     <p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?></p><?php } ?>
 								<h3> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?> 's Profile </h3>
 								<hr />
 								
@@ -311,7 +319,7 @@ $widowed = "checked";
 												</tr>
 												<tr>
 													<td>Password</td>
-													<td><?php echo $userRow['password']; ?></td>
+													<td><?php echo "**********************************************" ?><?php echo " " ?><button data-toggle="modal" data-target="#myChange" style="height : 30px"><span	>Change Password</span></button></td>
 												</tr>
 												<tr>
 													<td>MaritialStatus</td>
@@ -374,7 +382,7 @@ $widowed = "checked";
 													</tr>
 													<tr>
 														<td>Password:</td>
-														<td><?php echo $userRow['password']; ?></td>
+														<td><?php echo "****************" ?></td>
 													</tr>
 													<tr>
 														<td>First Name:</td>
@@ -475,6 +483,61 @@ $widowed = "checked";
 							</div>
 							<br /><br/>
 						</div>
+						<div class="modal fade" id="myChange" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">Change Password</h4>
+									</div>
+									<div class="modal-body">
+										<!-- form start -->
+										<form action="<?php $_PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+											<table class="table table-user-information">
+												<tbody>
+													<tr>
+														<td>Current Password:</td>
+														<td><input type="password" class="form-control" name="current" value=""  /></td>
+													</tr>
+													<tr>
+														<td>New Password:</td>
+														<td><input type="password" class="form-control" name="new" value=""  /></td>
+													</tr>
+													<tr>
+														<td>Confirm Password</td>
+														<td><input type="password" class="form-control" name="confirm" value=""  /></td>
+													</tr>
+													<tr>
+														<td>
+															<input type="submit" name="submitchange" class="btn btn-info" value="Change Password"></td>
+														</tr>
+													</tbody>
+													
+												</table>
+												
+												
+												
+											</form>
+										<?php	if(isset($_POST['submitchange']))
+{
+	
+$sql=mysqli_query($con,"SELECT password FROM  patient where password='".md5($_POST['current'])."' && icPatient='".$_SESSION['patientSession']."'");
+$num=mysqli_fetch_array($sql);
+if($num>0)
+{
+ $con=mysqli_query($con,"UPDATE patient SET password='".md5($_POST['new'])."' WHERE icPatient='".$_SESSION['patientSession']."'");
+
+}
+
+}?>
+											<!-- form end -->
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							<br /><br/>
+						</div>
 						
 					</div>
 					<!-- ROW END -->
@@ -493,6 +556,8 @@ $widowed = "checked";
     })
     $('#myDoctors').on('shown.bs.modal', function () {
     $('#myInput').focus()
+    })$('#myChange').on('shown.bs.modal', function () {
+    $('#myInput').focus()
     })
     </script>
 			<script type="text/javascript">
@@ -500,5 +565,16 @@ $widowed = "checked";
 														$('#patientDOB').datetimepicker();
 														});
 														</script>
+														   <script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5fa92f558e1c140c2abc3136/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 		</body>
 	</html>

@@ -59,13 +59,16 @@ $patientGender = mysqli_real_escape_string($con,$_POST['patientGender']);
 $query = " INSERT INTO patient (  username, password, patientFirstName, patientLastName,  patientDOB, patientGender, patientAddress, patientPhone, patientEmail )
 VALUES ( '$username', '$pwd', '$patientFirstName', '$patientLastName', '$patientDOB', '$patientGender', '$patienAddress', '$patientPhone', '$patientEmail' ) ";
 $result = mysqli_query($con, $query);
+
 // echo $result;
 if( $result )
 {
+    $helo = mysqli_query($con,"SELECT * FROM patient WHERE username = '$username'");
+    $ro=mysqli_fetch_array($helo,MYSQLI_ASSOC);
+    $_SESSION['patientSession'] = $ro['icPatient'];
 ?>
-<script type="text/javascript">
-alert('Register success. Please Login to make an appointment.');
-</script>
+
+
 <?php
 }
 else
@@ -87,7 +90,7 @@ alert('IC Number already registered. Please try again');
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Clinic Appointment Application</title>
+        <title>Friend of Doctor</title>
         <!-- Bootstrap -->
         <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet"> -->
         <link href="assets/css/style.css" rel="stylesheet">
@@ -114,7 +117,7 @@ alert('IC Number already registered. Please try again');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
+                    <a class="navbar-brand" href="index.php"><img alt="Brand" src="assets/img/lg.png" width= "100px" height="48px" /></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -387,6 +390,34 @@ alert('IC Number already registered. Please try again');
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myTB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- modal content -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <!-- modal body start -->
+                    <div class="modal-body">
+                        
+                        <!-- form start -->
+                        <div class="container" id="wrap">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
+                                        
+                                                
+                                        
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="myNews" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -420,7 +451,7 @@ alert('IC Number already registered. Please try again');
                                                 </div>
                                                 
                                                 <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $posts['postTitle']; ?> </a>
-                                                <h5><?php echo substr($posts['postBody'],0,200) . "........ <a href='#'>Read more</a>" ;?></h5>
+                                                <h5><?php echo substr($posts['postBody'],0,200) . "........ " ;?></h5>
                                                 
                                                 <h5 style="color:#202020; font-family:'typo' ;font-size:15px" class="title1"><b>Created at :</b><?php echo $posts['postCreate']?></h5></div>
                                             </p>
@@ -465,7 +496,13 @@ alert('IC Number already registered. Please try again');
                                                 <div class="row">
                                                 <div class="col-md-4">
                                                 <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
-                                                <?php echo "<img src='doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
+                                                <?php 
+                                                if($rowss['doctorImg']==""){
+                                                    echo "<img src='assets/img/avavs.jpg' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ;
+                                                }
+                                                else{
+                                                echo "<img src='doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ;
+                                                }?>
                                                 </div>
                                                 
                                                 <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorFirstName']; ?> <?php echo $rowss['doctorLastName']; ?></a>
@@ -571,7 +608,7 @@ alert('IC Number already registered. Please try again');
         <!-- footer start -->
         <div class="copyright-bar bg-black">
             <div class="container">
-                <p class="pull-left small">© Created by <a href="https://facebook.com/nguyennguyenas" target="_blank">Nguyên Nguyên</a></p>
+                <p class="pull-left small">© Created by <a href="https://facebook.com/nguyennguyenas" target="_blank">C1SE.35 Team</a></p>
                 <p class="pull-right small"><a href="admin/">Admin</a></p>
                 <br>
                 <p class="pull-right small"><a href="doctorlogin.php">Doctor</a></p>

@@ -19,7 +19,7 @@ $pwd = md5($password);
 $sql=mysqli_query($con,"insert into doctor(password,username,doctorFirstName,doctorLastName,doctorSpecialist,doctorAddress,doctorPhone,doctorEmail,doctorDOB) values('$pwd','$username','$docFname','$docLname','$docspecialization','$address','$phone','$email','$dob')");
 if($sql)
 {
-echo "<script>alert('Doctor info added Successfully');</script>";
+	$_SESSION['msg']="Add successfull !!";
 echo "<script>window.location.href ='manage-doctors.php'</script>";
 
 }

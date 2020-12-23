@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 20, 2020 lúc 07:57 AM
+-- Thời gian đã tạo: Th12 23, 2020 lúc 04:44 AM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.2.31
 
@@ -76,13 +76,6 @@ CREATE TABLE `doctor` (
   `doctorSocial` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Đang đổ dữ liệu cho bảng `doctor`
---
-
-INSERT INTO `doctor` (`icDoctor`, `password`, `username`, `doctorFirstName`, `doctorLastName`, `doctorSpecialist`, `doctorAddress`, `doctorPhone`, `doctorEmail`, `doctorDOB`, `doctorImg`, `doctorSocial`) VALUES
-(12, 'e9b654fb4686c0da0f12e9472a65c477', 'bacsi1', 'Nguyen', 'Nguyen Cao', 8, 'Da Nang', '0394073759', 'nguyencaonguyencmu@gmail.com', '2015-01-06', 'a.jpg', '');
-
 -- --------------------------------------------------------
 
 --
@@ -97,13 +90,6 @@ CREATE TABLE `doctorschedule` (
   `endTime` time NOT NULL,
   `bookAvail` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Đang đổ dữ liệu cho bảng `doctorschedule`
---
-
-INSERT INTO `doctorschedule` (`scheduleId`, `icDoctor`, `scheduleDate`, `startTime`, `endTime`, `bookAvail`) VALUES
-(120, 12, '2020-12-21', '22:55:00', '17:37:00', 'notavail');
 
 -- --------------------------------------------------------
 
@@ -145,8 +131,7 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`postID`, `postTitle`, `postBody`, `postImg`, `postCreate`) VALUES
-(19, 'caonguyennnn', '<p><strong>C&uacute; ph&aacute;p:</strong>&nbsp;<code>html_entity_decode(string $string,[string $flags, string $character-set,string $double_encode])</code><br />\r\n<strong>C&ocirc;ng d?ng:</strong>&nbsp;gi?i m&atilde; th?c th? sang m&atilde; HTML&nbsp;<br />\r\nC&aacute;c tham s? truy?n v&agrave;o t??ng t? h&agrave;m&nbsp;<code>htmlentities()</code>&nbsp;- n?u tham s? truy?n v&agrave;o cho h&agrave;m&nbsp;<code>htmlentities()</code>&nbsp;th? n&agrave;o th&igrave; ph?i truy?n cho h&agrave;m n&agrave;y t??ng ?ng m?i gi?i m&atilde; ?&uacute;ng.</p>\r\n\r\n<p>V&iacute; d?:<br />\r\n<code>$str = &quot;&amp;lt;&amp;copy; abc&quot;;</code><br />\r\n<code>echo html_entity_decode($str);</code></p>\r\n', 'av.jpg', '2020-11-18'),
-(20, 'Cao nguyen', '<p>Certain characters have special significance in HTML, and should be represented by HTML entities if they are to preserve their meanings. This function returns a string with some of these conversions made; the translations made are those most useful for everyday web programming. If you require all HTML character entities to be translated, use htmlentities() instead Certain characters have special significance in HTML, and should be represented by HTML entities if they are to preserve their meanings. This function returns a string with some of these conversions made; the translations made are those most useful for everyday web programming. If you require all HTML character entities to be translated, use htmlentities() instead</p>\r\n', 'a.jpg', '2020-11-18');
+(21, 'Thông báo!!', '<p>He thong da duoc dua vao su dung</p>\r\n', 'FoD.gif', '2020-12-22');
 
 -- --------------------------------------------------------
 
@@ -158,16 +143,6 @@ CREATE TABLE `specialist` (
   `id` int(11) NOT NULL,
   `name` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Đang đổ dữ liệu cho bảng `specialist`
---
-
-INSERT INTO `specialist` (`id`, `name`) VALUES
-(8, 'Dermatology'),
-(9, 'Ear, nose and throat'),
-(10, 'Medical'),
-(11, 'Surgery');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -234,37 +209,37 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `appId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT cho bảng `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `icDoctor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `icDoctor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `doctorschedule`
 --
 ALTER TABLE `doctorschedule`
-  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT cho bảng `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `icPatient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `icPatient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT cho bảng `post`
 --
 ALTER TABLE `post`
-  MODIFY `postID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `postID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT cho bảng `specialist`
 --
 ALTER TABLE `specialist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

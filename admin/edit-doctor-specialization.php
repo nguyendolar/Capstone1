@@ -74,20 +74,22 @@ $_SESSION['msg']="Doctor Specialization updated successfully !!";
 												<div class="panel-body">
 								<p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?>
 								<?php echo htmlentities($_SESSION['msg']="");?></p>	
+								<?php 
+
+$id=intval($_GET['id']);
+	$sql=mysqli_query($con,"select * from doctorSpecilization where id='$id'");
+    $row=mysqli_fetch_array($sql)
+													
+	?>
 													<form role="form" name="dcotorspcl" method="post" >
 														<div class="form-group">
 															<label for="exampleInputEmail1">
 																Edit Doctor Specialization
 															</label>
+															<input type="text" name="doctorspecilization" class="form-control" value="<?php echo $row['specilization'];?>" >
 
-	<?php 
-
-$id=intval($_GET['id']);
-	$sql=mysqli_query($con,"select * from doctorSpecilization where id='$id'");
-while($row=mysqli_fetch_array($sql))
-{														
-	?>		<input type="text" name="doctorspecilization" class="form-control" value="<?php echo $row['specilization'];?>" >
-	<?php } ?>
+		
+	
 														</div>
 												
 														

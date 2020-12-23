@@ -26,7 +26,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table>
                             <tr>
                                 <td class="title">
-                                    <img src="assets/img/logo.png" style="width:100%; max-width:300px;">
+                                    <img src="../assets/img/lg.png" style="width:80%; max-width:300px;">
                                 </td>
                                 
                                 <td>

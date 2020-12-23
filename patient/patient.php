@@ -54,7 +54,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
+					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="../assets/img/lg.png" width= "100px" height="45px"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -168,7 +168,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                                 </div>
                                                 
                                                 <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $posts['postTitle']; ?> </a>
-                                                <h5><?php echo substr($posts['postBody'],0,200) . "........ <a href='#'>Read more</a>" ;?></h5>
+                                                <h5 style="font-size: 16px"><?php echo substr($posts['postBody'],0,200) . "........ " ;?></h5>
                                                 
                                                 <h5 style="color:#202020; font-family:'typo' ;font-size:15px" class="title1"><b>Created at :</b><?php echo $posts['postCreate']?></h5></div>
                                             </p>
@@ -212,7 +212,13 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                                 <div class="row">
                                                 <div class="col-md-4">
                                                 <!--<img src="assets/img/logo.png" width=100 height=100 alt="Sunny Prakash Tiwari" class="img-rounded">-->
-                                                <?php echo "<img src='../doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ?>
+                                                <?php 
+                                                if($rowss['doctorImg']==""){
+                                                    echo "<img src='../assets/img/avavs.jpg' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ;
+                                                }
+                                                else{
+                                                echo "<img src='../doctor/assets/img/".$rowss['doctorImg']."' width=160 height=180 alt='Sunny Prakash Tiwari' class='img-rounded' >" ;
+                                                }?>
                                                 </div>
                                             
                                                 <a href="<?php echo $rowss['doctorSocial'] ?>" style="color:#202020; font-family:'typo' ; font-size:20px" title="Find on Facebook" target="_blank" ><b><?php echo $rowss['doctorFirstName']; ?> <?php echo $rowss['doctorLastName']; ?></a>
@@ -249,8 +255,9 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 									echo " <i class='fa fa-info-circle'></i>  <strong>Please complete your profile.</strong>" ;
 									
 								echo "  </div>";
-								echo " <img src='https://lh3.googleusercontent.com/proxy/i8Yohv6jwy1XInaKDcULoTEpccAgQAq8Nppp94aWeRetOdDusQNrUE8Lcfcb8Qhl-BtoJcG6UOVS-K1sZdUmyScPY-vO7WvtFtc4LB07GIrP3oSAaAFXxrE5zQM9aNkOHjxgWcFBs3zCSZ26z4oGC2ApP0M2s73h5e-_oA' width=700px height=400px />" ;
+								
 							echo "</div>";
+							echo " <img src='../assets/img/blog.jpg' width=700px height=400px />" ;
 							// <!-- notification end -->
 							
 							} else { ?>
@@ -322,7 +329,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 		<!-- footer start -->
 		<div class="copyright-bar bg-black">
             <div class="container">
-                <p class="pull-left small">© Created by <a href="https://facebook.com/nguyennguyenas" target="_blank">Nguyên Nguyên</a></p>
+                <p class="pull-left small">© Created by <a href="https://facebook.com/nguyennguyenas" target="_blank">C1SE.35 Team</a></p>
                 
             </div>
         </div>
@@ -361,7 +368,17 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 		})
 		</script>
 		<!-- date end -->
-		
+		<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5fa92f558e1c140c2abc3136/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 		
 	</body>
 </html>

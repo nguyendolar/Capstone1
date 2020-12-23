@@ -91,7 +91,7 @@ header("Location: patient/patient.php");
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
+					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="../assets/img/lg.png" width= "100px" height="45px"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -453,10 +453,16 @@ if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
 						<div class="col-md-3 col-sm-3">
 							
 							<div class="user-wrapper">
-							<?php echo "<img src='assets/img/".$userRow['patientImg']."' class='img-responsive' />"?>
+							<?php
+							if($userRow['patientImg']==""){
+								echo "<img src='../assets/img/avavs.jpg' class='img-responsive' />" ;
+							}
+							else{
+								 echo "<img src='assets/img/".$userRow['patientImg']."' class='img-responsive' />" ;
+							}?>
 								<div class="description">
-									<h4><?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?></h4>
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
+									
+									
 								</div>
 							</div>
 						</div>
@@ -524,5 +530,16 @@ if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
     </script>
 					<script src="assets/js/jquery.js"></script>
 			<script src="assets/js/bootstrap.min.js"></script>
+			<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5fa92f558e1c140c2abc3136/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 				</body>
 			</html>

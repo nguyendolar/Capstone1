@@ -7,7 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE username='$usersession'");
+$res=mysqli_query($con,"SELECT a.*,b.* FROM doctor a, specialist b WHERE a.username='$usersession' AND a.doctorSpecialist = b.id");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
@@ -30,7 +30,7 @@ if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
     echo '<script language="javascript">alert("Đã upload thất bại!");</script>';
     }
 header( 'Location: doctorprofile.php' ) ;
-
+$_SESSION['msg'] = "Update successfull!";
 }
 
 
@@ -115,14 +115,9 @@ header( 'Location: doctorprofile.php' ) ;
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 class="page-header">
-                            Doctor Profile
-                            </h2>
-                            <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="fa fa-calendar"></i> Doctor Profile
-                                </li>
-                            </ol>
+                           <p></p><br>
+                        <?php if(isset($_SESSION['msg'])){ ?>
+                                     <p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?></p><?php } ?>
                         </div>
                     </div>
                     <!-- Page Heading end-->
@@ -147,7 +142,10 @@ header( 'Location: doctorprofile.php' ) ;
                         <div class="col-md-3 col-sm-3">
                             
                             <div class="user-wrapper">
-                                <?php echo "<img src='assets/img/".$userRow['doctorImg']."' class='img-responsive' />" ?>
+                                <?php if($userRow['doctorImg']==""){
+                                    echo "<img src='../assets/img/avavs.jpg' class='img-responsive' />" ;
+                                }
+                                else{echo "<img src='assets/img/".$userRow['doctorImg']."' class='img-responsive' />";} ?>
                                  
                                 <div class="description">
                                     <h4><?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?></h4>
@@ -170,7 +168,10 @@ header( 'Location: doctorprofile.php' ) ;
                                         
                                         <table class="table table-user-information" align="center">
                                             <tbody>
-                                                
+                                            <tr>
+                                                    <td>Specialize</td>
+                                                    <td><?php echo $userRow['name']; ?></td>
+                                                </tr>
                                                 
                                                 <tr>
                                                     <td>Username</td>
@@ -178,7 +179,7 @@ header( 'Location: doctorprofile.php' ) ;
                                                 </tr>
                                                 <tr>
                                                     <td>Password</td>
-                                                    <td><?php echo $userRow['password']; ?></td>
+                                                    <td><?php echo "******************"; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myChange">Change Password</button></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Address</td>
@@ -219,12 +220,12 @@ header( 'Location: doctorprofile.php' ) ;
                         <!-- Large modal -->
                         
                         <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal fade" id="myChange" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                       
                                     </div>
                                     <div class="modal-body">
                                         <!-- form start -->
@@ -232,13 +233,59 @@ header( 'Location: doctorprofile.php' ) ;
                                             <table class="table table-user-information">
                                                 <tbody>
                                                     <tr>
-                                                        <td>Username:</td>
-                                                        <td><?php echo $userRow['username']; ?></td>
+                                                        <td>Current Password:</td>
+                                                        <td><input type="password" class="form-control" name="cp" value=""  /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Password:</td>
-                                                        <td><input type="text" class="form-control" name="password" value="<?php echo $userRow['password']; ?>"  /></td>
+                                                        <td>New Password</td>
+                                                        <td><input type="password" class="form-control" name="np" value=""  /></td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>Confirm Password</td>
+                                                        <td><input type="password" class="form-control" name="fp" value=""  /></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td>
+                                                            <input type="submit" name="psubmit" class="btn btn-info" value="Update Info"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    
+                                                </table>
+                                                
+                                                
+                                                
+                                            </form>
+                                            <?php	if(isset($_POST['psubmit']))
+{
+	
+$sql=mysqli_query($con,"SELECT password FROM  doctor where password='".md5($_POST['cp'])."' && username='$usersession'");
+$num=mysqli_fetch_array($sql);
+if($num>0)
+{
+ $con=mysqli_query($con,"UPDATE doctor SET password='".md5($_POST['np'])."' WHERE username='$usersession'");
+
+}
+
+}?>
+                                            <!-- form end -->
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                       
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- form start -->
+                                        <form action="<?php $_PHP_SELF ?>" method="post" enctype="multipart/form-data">
+                                            <table class="table table-user-information">
+                                                <tbody>
                                                     <tr>
                                                         <td>First Name:</td>
                                                         <td><input type="text" class="form-control" name="doctorFirstName" value="<?php echo $userRow['doctorFirstName']; ?>"  /></td>
@@ -247,11 +294,6 @@ header( 'Location: doctorprofile.php' ) ;
                                                         <td>Last Name</td>
                                                         <td><input type="text" class="form-control" name="doctorLastName" value="<?php echo $userRow['doctorLastName']; ?>"  /></td>
                                                     </tr>
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
                                                     <tr>
                                                         <td>Phone number</td>
                                                         <td><input type="text" class="form-control" name="doctorPhone" value="<?php echo $userRow['doctorPhone']; ?>"  /></td>

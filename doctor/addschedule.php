@@ -28,11 +28,7 @@ $result = mysqli_query($con, $query);
 // echo $result;
 if( $result )
 {
-?>
-<script type="text/javascript">
-alert('Schedule added successfully.');
-</script>
-<?php
+    $_SESSION['msg']="Add successfull !!";
 }
 else
 {
@@ -139,7 +135,9 @@ alert('Added fail. Please try again.');
                             </h2>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="fa fa-calendar"></i> Schedule
+                                    <i class="fa fa-calendar"></i>
+                                    <?php if(isset($_SESSION['msg'])){ ?>
+                                     <p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?></p><?php } ?>
                                 </li>
                             </ol>
                         </div>
